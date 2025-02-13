@@ -2,32 +2,16 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-design-decisions]]
 == Architecture Decisions
+During the application development process, a series of decisions were made due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.
 
+These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:
 
-.Contents
-Important, expensive, large scale or risky architecture decisions including rationales.
-With "decisions" we mean selecting one alternative based on given criteria.
+=== Main Framework
+**Description:** The main programming language for the application's development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.
 
-Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).
+**Decision taken:** Due to the need for the framework to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code framework.
 
-Avoid redundancy. 
-Refer to section 4, where you already captured the most important decisions of your architecture.
+=== ¿?
+**Description:** ...
 
-.Motivation
-Stakeholders of your system should be able to comprehend and retrace your decisions.
-
-.Form
-Various options:
-
-* ADR (https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions[Documenting Architecture Decisions]) for every important decision
-* List or table, ordered by importance and consequences or:
-* more detailed in form of separate sections per decision
-
-.Further Information
-
-See https://docs.arc42.org/section-9/[Architecture Decisions] in the arc42 documentation.
-There you will find links and examples about ADR.
-
-= PLANTILLA DE ESTILO
+**Decision taken:** ...
