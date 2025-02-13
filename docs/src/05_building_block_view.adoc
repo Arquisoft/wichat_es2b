@@ -7,6 +7,8 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 ifdef::arc42help[]
 [role="arc42help"]
+.General Diagram
+
 ****
 .Content
 The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, ...) as well as their dependencies (relationships, associations, ...)
@@ -71,14 +73,23 @@ _**<Overview Diagram>**_
 
 Motivation::
 
-_<text explanation>_
+_The diagrams objective is the readily and easy comunication of the general design of the user interaction of the aplication and the external elements that it may use_
 
 
 Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
+****
+
+* **User:** This is the person that will be playing the game. They will need to create an account be able to play.
+* **Wichat Application:** The main application which contains the game in itself
+* **WikiData API:** This is an external API, the way which the questions will be made and answered.
+* **LLM API:** This is an external API for the use of a LLM, generating a chat which we can use for hinting at the player.
+
+
+****
 
 Important Interfaces::
-_<Description of important interfaces>_
+The user will interact with the system via the web client, which will allow them to play games. The system will then interact with the WikiData API for the question generator module and lastly using the LLM model to create an interactive chat for hinting at the user of the answer.
+
 
 ifdef::arc42help[]
 [role="arc42help"]
