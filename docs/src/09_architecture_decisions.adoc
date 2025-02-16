@@ -2,7 +2,9 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-design-decisions]]
 == Architecture Decisions
+
 During the application development process, a series of decisions may change due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.
+=======
 
 These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:
 
