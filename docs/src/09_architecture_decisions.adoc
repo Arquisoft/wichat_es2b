@@ -4,7 +4,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 == Architecture Decisions
 
 During the application development process, a series of decisions may change due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.
-=======
 
 These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:
 
@@ -26,7 +25,7 @@ These decisions are discussed in personal meetings and recorded in the meeting m
 **Decision taken:** The most likely candidate for its implementation is react, yet it is still up for debate.
 
 
-=== Front-End
+=== Back-End
 
 7/02/2024
 
