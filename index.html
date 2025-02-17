@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<title>wichat_0</title>
+<title>wichat_es2b</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,7 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1><span class="image"><img src="./images/arc42-logo.png" alt="arc42"></span> wichat_0</h1>
+<h1><span class="image"><img src="./images/arc42-logo.png" alt="arc42"></span> wichat_es2b</h1>
 <div class="details">
 <span id="revnumber">version 8.2 EN,</span>
 <span id="revdate">January 2023</span>
@@ -456,7 +456,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-context-and-scope">3. Context and Scope</a>
 <ul class="sectlevel2">
 <li><a href="#_business_context">3.1. Business Context</a></li>
-<li><a href="#_technical_context">3.2. Technical Context</a></li>
+<li><a href="#_3_2_technical_context">3.2. 3.2 Technical Context</a></li>
+<li><a href="#_explanation_of_technical_interfaces">3.3. <strong>Explanation of technical interfaces</strong> 📃</a></li>
 </ul>
 </li>
 <li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
@@ -481,22 +482,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_infrastructure_level_2">7.2. Infrastructure Level 2</a></li>
 </ul>
 </li>
-<li><a href="#section-concepts">8. Cross-cutting Concepts</a>
+<li><a href="#section-concepts">8. Cross-cutting Concepts</a></li>
+<li><a href="#_8_1_application_architecture">9. 8.1. Application Architecture</a></li>
+<li><a href="#_8_2_integration_with_microservices">10. 8.2. Integration with Microservices</a></li>
+<li><a href="#_8_3_data_persistence_and_management">11. 8.3. Data Persistence and Management</a></li>
+<li><a href="#_8_4_1_llm_service">12. 8.4.1. LLM Service</a></li>
+<li><a href="#section-design-decisions">13. Architecture Decisions</a></li>
+<li><a href="#section-quality-scenarios">14. Quality Requirements</a>
 <ul class="sectlevel2">
-<li><a href="#_concept_1">8.1. <em>&lt;Concept 1&gt;</em></a></li>
-<li><a href="#_concept_2">8.2. <em>&lt;Concept 2&gt;</em></a></li>
-<li><a href="#_concept_n">8.3. <em>&lt;Concept n&gt;</em></a></li>
+<li><a href="#_quality_tree">14.1. Quality Tree</a></li>
+<li><a href="#_quality_scenarios">14.2. Quality Scenarios</a></li>
 </ul>
 </li>
-<li><a href="#section-design-decisions">9. Architecture Decisions</a></li>
-<li><a href="#section-quality-scenarios">10. Quality Requirements</a>
-<ul class="sectlevel2">
-<li><a href="#_quality_tree">10.1. Quality Tree</a></li>
-<li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
-</ul>
-</li>
-<li><a href="#section-technical-risks">11. Risks and Technical Debts</a></li>
-<li><a href="#section-glossary">12. Glossary</a></li>
+<li><a href="#section-technical-risks">15. Risks and Technical Debts</a></li>
+<li><a href="#section-glossary">16. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -712,29 +711,106 @@ These stakeholders determine the extent and the level of detail of your work and
 <div class="sect1">
 <h2 id="section-architecture-constraints">2. Architecture Constraints</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
+<div class="paragraph">
+<p>The application must be developed according to some constraints that were defined by the client. These constraints are meant to be the cornerstones of our project as they are mandatory and provide a baseline to work on. The following tables will define the constraints.</p>
+</div>
+<div class="paragraph">
+<p><strong>Technical constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Webbapp accesibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be accesible throgh a browser</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wikidata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The validity of questions and the questions themselves must be obtained through their Api</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is imperative that we use Github for the recording of all of our work</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is obligatory that the program saves and stores data on the different users through a profile</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use of LLM model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We are to build a chatbot for the practice, wich means utilizing an LLM</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Organizational constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meetings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The team is due to an obligatory meeting per week at the time of Software Architecture class</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deliveries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There are three separate times where the project will be presented and those times are set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The use of Issues and Pull Requests for the proyects organization is highly sought to the point of necesity</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Conventional constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation in Arc42</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The documentation must follow the Arc42 template</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It was agreed beforehand that english would be the language chosen for the proyect</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">As the platform we work on we are obligated to learn Githubs conventions</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Wireframes</strong></p>
+</div>
+<div class="imageblock text-center">
 <div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.</p>
+<img src="./images/wireframe-XXX.png" alt="wireframe XXX">
 </div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-2/">Architecture Constraints</a> in the arc42 documentation.</p>
-</div>
-</div>
+<div class="title">Figure 1. XXX Wireframe</div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -807,7 +883,7 @@ The title of the table is the name of your system, the three columns contain the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_technical_context">3.2. Technical Context</h3>
+<h3 id="_3_2_technical_context">3.2. 3.2 Technical Context</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -826,15 +902,166 @@ together with a mapping table showing the relationships between channels and inp
 </div>
 </div>
 <div class="paragraph">
-<p><strong>&lt;Diagram or Table&gt;</strong></p>
+<p><strong>Diagram or Table</strong></p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/3.2_Technical_Context.png" alt="3.2 Technical Context">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_explanation_of_technical_interfaces">3.3. <strong>Explanation of technical interfaces</strong> 📃</h3>
 <div class="paragraph">
-<p><strong>&lt;optionally: Explanation of technical interfaces&gt;</strong></p>
+<p>The application follows a <strong>hexagonal architecture pattern</strong>, with the following components:</p>
+</div>
+<div class="sect3">
+<h4 id="_agent_user_external_user">3.3.1. <strong>Agent User (External User)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The user interacts with the <strong>Web App</strong>, which serves as the frontend interface.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_web_app_frontend_layer">3.3.2. <strong>Web App (Frontend Layer)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Sends <strong>requests</strong> to and receives <strong>responses</strong> from the <strong>Gateway Service</strong>.</p>
+</li>
+<li>
+<p>Acts as a bridge between the external user and the backend services.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gateway_service_api_gateway_central_layer">3.3.3. <strong>Gateway Service (API Gateway &amp; Central Layer)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Central hub that manages communication between different services.</p>
+</li>
+<li>
+<p>Handles authentication, user management, and interaction with external components.</p>
+</li>
+<li>
+<p>Uses <strong>JPA (Java Persistence API)</strong> to interact with the <strong>MySQL database</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_domain_business_logic_layer">3.3.4. <strong>Domain (Business Logic Layer)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Contains core business logic.</p>
+</li>
+<li>
+<p>Works closely with the <strong>Gateway Service</strong> to process requests.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_services_layer_microservices_architecture">3.3.5. <strong>Services Layer (Microservices Architecture)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User Service</strong>: Manages user-related operations.</p>
+</li>
+<li>
+<p><strong>Auth Service</strong>: Handles authentication and authorization.</p>
+</li>
+<li>
+<p><strong>LLM Service</strong>: Interfaces with a Large Language Model (LLM) for AI-driven responses.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_database_layer_persistent_storage">3.3.6. <strong>Database Layer (Persistent Storage)</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>MySQL Database</strong>: Stores application data, accessed via <strong>JPA</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_technical_interfaces">3.3.7. <strong>Technical Interfaces</strong></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Web App &amp; Gateway Service</strong>: HTTP Requests/Responses.</p>
+</li>
+<li>
+<p><strong>Gateway Service &amp; Services Layer (User, Auth, LLM Services)</strong>: REST API or gRPC communication.</p>
+</li>
+<li>
+<p><strong>Gateway Service &amp; MySQL</strong>: JPA-based database interaction.</p>
+</li>
+<li>
+<p><strong>Gateway Service &amp; Domain</strong>: Internal service calls.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p><strong>&lt;Mapping Input/Output to Channels&gt;</strong></p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Input</th>
+<th class="tableblock halign-left valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web App</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UI Responses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API Calls</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Processed Data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Data Requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Data Responses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auth Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication Requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auth Tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LLM Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI Queries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AI Responses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL Database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Queries via JPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stored Data</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -973,22 +1200,45 @@ In the best case you will get away with examples or simple signatures.</p>
 </div>
 </div>
 </div>
-<div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
+<div class="imageblock">
+<div class="content">
+<img src="./images/5.1_Whitebox_Overall_System.png" alt="5.1 Whitebox Overall System">
+</div>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p><em>&lt;text explanation&gt;</em></p>
+<p>This sketch represents the interactions within the Wichat application. It outlines the components of the system and how they communicate, focusing on the user&#8217;s experience with the application and its core logic powered by an LLM (Large Language Model).</p>
 </dd>
 <dt class="hdlist1">Contained Building Blocks</dt>
 <dd>
-<p><em>&lt;Description of contained building block (black boxes)&gt;</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User</strong>: The authenticated individual interacting with the application. They play the game through the system, and their data is stored in the database.</p>
+</li>
+<li>
+<p><strong>Wichat Application (Domain)</strong>: The main system that drives the game logic. It handles the flow of the game, including interactions between the user and the system, and manages the rules and responses generated by the LLM.</p>
+</li>
+<li>
+<p><strong>LLM (Large Language Model)</strong>: This external component generates answers and images based on the user’s requests during the game. It processes inputs from the Wichat application to provide appropriate responses.</p>
+</li>
+</ul>
+</div>
 </dd>
 <dt class="hdlist1">Important Interfaces</dt>
 <dd>
-<p><em>&lt;Description of important interfaces&gt;</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User Interaction Interface</strong>: The web client through which the user plays the game, allowing them to send requests for new rounds.</p>
+</li>
+<li>
+<p><strong>LLM Communication Interface</strong>: This interface handles requests from the Wichat application to the LLM, sending prompts and receiving generated content like answers and images in return.</p>
+</li>
+</ul>
+</div>
 </dd>
 </dl>
 </div>
@@ -1271,7 +1521,7 @@ building block instances depicted in this diagram.&gt;</em></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram.png" alt="Sequence diagram" width="332" height="325">
+<img src="./images/Sequence%20diagram.png" alt="Sequence diagram" width="332" height="335">
 </div>
 </div>
 </div>
@@ -1533,32 +1783,119 @@ on this list.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_concept_1">8.1. <em>&lt;Concept 1&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_concept_2">8.2. <em>&lt;Concept 2&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_concept_n">8.3. <em>&lt;Concept n&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-design-decisions">9. Architecture Decisions</h2>
+<h2 id="_8_1_application_architecture">9. 8.1. Application Architecture</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.1. Hexagonal Architecture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application follows a hexagonal architecture pattern, separating the different layers: frontend, business logic, microservices, and persistent storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.2. Communication Between Components</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each component, such as the web app, Gateway Service, and microservices, communicates using technologies like HTTP and REST. This ensures smooth, scalable interaction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.3. Presentation Layer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">web app serves as the entry point for external users, allowing interaction with the application and routing requests through the Gateway Service.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_2_integration_with_microservices">10. 8.2. Integration with Microservices</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.2.1. Communication Between Microservices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices communicate via REST, enabling flexible integration and handling different functionalities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.2.2. Scalability Through Microservices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices architecture allows independent scaling of services without affecting other parts of the app.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_3_data_persistence_and_management">11. 8.3. Data Persistence and Management</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.3.1. Database Interaction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Gateway Service uses JPA to interact with MySQL, ensuring efficient and secure data management.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.3.2. Data Backup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The MySQL database should be configured for automatic backups, ensuring data integrity and recovery in case of failure.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_4_1_llm_service">12. 8.4.1. LLM Service</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.4.1. LLM Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The LLM Service is a microservice that interacts with a Large Language Model, generating text or performing language-related tasks based on user input.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-design-decisions">13. Architecture Decisions</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1608,7 +1945,7 @@ There you will find links and examples about ADR.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-quality-scenarios">10. Quality Requirements</h2>
+<h2 id="section-quality-scenarios">14. Quality Requirements</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1633,7 +1970,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_tree">10.1. Quality Tree</h3>
+<h3 id="_quality_tree">14.1. Quality Tree</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1663,9 +2000,14 @@ concrete and measurable.</p>
 </div>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/10.1_Quality_Tree.png" alt="10.1 Quality Tree">
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
+<h3 id="_quality_scenarios">14.2. Quality Scenarios</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1709,7 +2051,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-technical-risks">11. Risks and Technical Debts</h2>
+<h2 id="section-technical-risks">15. Risks and Technical Debts</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1738,7 +2080,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary">12. Glossary</h2>
+<h2 id="section-glossary">16. Glossary</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1804,7 +2146,7 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2025-01-16 13:35:11 +0100
+Last updated 2025-02-17 13:43:31 +0100
 </div>
 </div>
 </body>
