@@ -2,16 +2,43 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-design-decisions]]
 == Architecture Decisions
-During the application development process, a series of decisions were made due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.
+
+During the application development process, a series of decisions may change due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.
+=======
 
 These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:
 
 === Main Framework
+
+7/02/2024
+
 **Description:** The main programming language for the application's development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.
 
 **Decision taken:** Due to the need for the framework to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code framework.
 
-=== ¿?
-**Description:** ...
 
-**Decision taken:** ...
+=== Front-End
+
+7/02/2024
+
+**Description:** The main way for users to interact with the system and the part which will be deployer
+
+**Decision taken:** The most likely candidate for its implementation is react, yet it is still up for debate.
+
+
+=== Front-End
+
+7/02/2024
+
+**Description:** The inner workings of the application which will not be for the clients to use and see.
+
+**Decision taken:** The most likely candidate for its implementation is a relational database and a Javascript framework, yet it is still up for debate.
+
+
+=== LLM
+
+7/02/2024
+
+**Description:** The Language modules will be used for the hint generation in the application thus will be one we'll need to choose
+
+**Decision taken:** There had been no advancement in this decision.
