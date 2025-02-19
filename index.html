@@ -487,7 +487,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_8_2_integration_with_microservices">10. 8.2. Integration with Microservices</a></li>
 <li><a href="#_8_3_data_persistence_and_management">11. 8.3. Data Persistence and Management</a></li>
 <li><a href="#_8_4_1_llm_service">12. 8.4.1. LLM Service</a></li>
-<li><a href="#section-design-decisions">13. Architecture Decisions</a></li>
+<li><a href="#section-design-decisions">13. Architecture Decisions</a>
+<ul class="sectlevel2">
+<li><a href="#_main_framework">13.1. Main Framework</a></li>
+<li><a href="#_front_end">13.2. Front-End</a></li>
+<li><a href="#_back_end">13.3. Back-End</a></li>
+<li><a href="#_llm">13.4. LLM</a></li>
+</ul>
+</li>
 <li><a href="#section-quality-scenarios">14. Quality Requirements</a>
 <ul class="sectlevel2">
 <li><a href="#_quality_tree">14.1. Quality Tree</a></li>
@@ -711,29 +718,106 @@ These stakeholders determine the extent and the level of detail of your work and
 <div class="sect1">
 <h2 id="section-architecture-constraints">2. Architecture Constraints</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
+<div class="paragraph">
+<p>The application must be developed according to some constraints that were defined by the client. These constraints are meant to be the cornerstones of our project as they are mandatory and provide a baseline to work on. The following tables will define the constraints.</p>
+</div>
+<div class="paragraph">
+<p><strong>Technical constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Webbapp accesibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be accesible throgh a browser</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wikidata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The validity of questions and the questions themselves must be obtained through their Api</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is imperative that we use Github for the recording of all of our work</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is obligatory that the program saves and stores data on the different users through a profile</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use of LLM model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We are to build a chatbot for the practice, wich means utilizing an LLM</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Organizational constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meetings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The team is due to an obligatory meeting per week at the time of Software Architecture class</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deliveries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There are three separate times where the project will be presented and those times are set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The use of Issues and Pull Requests for the proyects organization is highly sought to the point of necesity</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Conventional constraints</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constraint</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation in Arc42</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The documentation must follow the Arc42 template</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It was agreed beforehand that english would be the language chosen for the proyect</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">As the platform we work on we are obligated to learn Githubs conventions</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Wireframes</strong></p>
+</div>
+<div class="imageblock text-center">
 <div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.</p>
+<img src="./images/wireframe-XXX.png" alt="wireframe XXX">
 </div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-2/">Architecture Constraints</a> in the arc42 documentation.</p>
-</div>
-</div>
+<div class="title">Figure 1. XXX Wireframe</div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1820,51 +1904,61 @@ on this list.</p>
 <div class="sect1">
 <h2 id="section-design-decisions">13. Architecture Decisions</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>Important, expensive, large scale or risky architecture decisions including rationales.
-With "decisions" we mean selecting one alternative based on given criteria.</p>
+<p>During the application development process, a series of decisions may change due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.</p>
 </div>
 <div class="paragraph">
-<p>Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).</p>
+<p>These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:</p>
+</div>
+<div class="sect2">
+<h3 id="_main_framework">13.1. Main Framework</h3>
+<div class="paragraph">
+<p>7/02/2024</p>
 </div>
 <div class="paragraph">
-<p>Avoid redundancy.
-Refer to section 4, where you already captured the most important decisions of your architecture.</p>
+<p><strong>Description:</strong> The main programming language for the application&#8217;s development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>Stakeholders of your system should be able to comprehend and retrace your decisions.</p>
+<p><strong>Decision taken:</strong> Due to the need for the framework to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code framework.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_front_end">13.2. Front-End</h3>
+<div class="paragraph">
+<p>7/02/2024</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Various options:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>ADR (<a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">Documenting Architecture Decisions</a>) for every important decision</p>
-</li>
-<li>
-<p>List or table, ordered by importance and consequences or:</p>
-</li>
-<li>
-<p>more detailed in form of separate sections per decision</p>
-</li>
-</ul>
+<p><strong>Description:</strong> The main way for users to interact with the system and the part which will be deployer</p>
 </div>
 <div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-9/">Architecture Decisions</a> in the arc42 documentation.
-There you will find links and examples about ADR.</p>
+<p><strong>Decision taken:</strong> The most likely candidate for its implementation is react, yet it is still up for debate.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_back_end">13.3. Back-End</h3>
+<div class="paragraph">
+<p>7/02/2024</p>
+</div>
+<div class="paragraph">
+<p><strong>Description:</strong> The inner workings of the application which will not be for the clients to use and see.</p>
+</div>
+<div class="paragraph">
+<p><strong>Decision taken:</strong> The most likely candidate for its implementation is a relational database and a Javascript framework, yet it is still up for debate.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_llm">13.4. LLM</h3>
+<div class="paragraph">
+<p>7/02/2024</p>
+</div>
+<div class="paragraph">
+<p><strong>Description:</strong> The Language modules will be used for the hint generation in the application thus will be one we&#8217;ll need to choose</p>
+</div>
+<div class="paragraph">
+<p><strong>Decision taken:</strong> There had been no advancement in this decision.</p>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 <div class="sect1">
