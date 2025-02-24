@@ -456,8 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-context-and-scope">3. Context and Scope</a>
 <ul class="sectlevel2">
 <li><a href="#_business_context">3.1. Business Context</a></li>
-<li><a href="#_3_2_technical_context">3.2. 3.2 Technical Context</a></li>
-<li><a href="#_explanation_of_technical_interfaces">3.3. <strong>Explanation of technical interfaces</strong> 📃</a></li>
+<li><a href="#_technical_context">3.2. Technical Context</a></li>
 </ul>
 </li>
 <li><a href="#section-solution-strategy">4. Solution Strategy</a>
@@ -477,10 +476,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-runtime-view">6. Runtime View</a>
 <ul class="sectlevel2">
-<li><a href="#_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</a></li>
-<li><a href="#_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</a></li>
-<li><a href="#">6.3. &#8230;&#8203;</a></li>
-<li><a href="#_runtime_scenario_n">6.4. &lt;Runtime Scenario n&gt;</a></li>
+<li><a href="#_runtime_scenario_1_login">6.1. &lt;Runtime Scenario 1 : Login&gt;</a></li>
+<li><a href="#_runtime_scenario_2_singup">6.2. &lt;Runtime Scenario 2 SingUp&gt;</a></li>
+<li><a href="#_runtime_scenario_3_game_cycle">6.3. &lt;Runtime Scenario 3 Game cycle&gt;</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a>
@@ -1000,14 +998,77 @@ The title of the table is the name of your system, the three columns contain the
 </div>
 </div>
 <div class="paragraph">
-<p><strong>&lt;Diagram or Table&gt;</strong></p>
+<p>The following table describes the business context, outlining the key actors interacting with the system and their relationships.</p>
 </div>
-<div class="paragraph">
-<p><strong>&lt;optionally: Explanation of external domain interfaces&gt;</strong></p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Actor</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Interaction with the System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Players</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users who access the application to play the game.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interact with the web interface, receive random locations, request hints from the LLM, and submit guesses.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LLM Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API service providing AI-generated hints for players.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Receives user queries and returns contextual hints about the player&#8217;s location.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web Application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The frontend React-based web application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Displays the game interface, processes user interactions, and communicates with backend services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API gateway handling requests between the frontend and backend services.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Routes user requests, manages authentication, and forwards LLM-related queries.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages user authentication and access control.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handles user login, registration, and session management.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages user-related data, including game history and scores.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stores and retrieves user data, including past game records.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Internal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB instance storing user and game data.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stores user accounts, game sessions, and interaction logs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deployment Platform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud-based hosting service (e.g., AWS, Azure, or DigitalOcean).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts the web application, backend services, and database.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_3_2_technical_context">3.2. 3.2 Technical Context</h3>
+<h3 id="_technical_context">3.2. Technical Context</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -1033,14 +1094,13 @@ together with a mapping table showing the relationships between channels and inp
 <img src="./images/3.2_Technical_Context.png" alt="3.2 Technical Context">
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_explanation_of_technical_interfaces">3.3. <strong>Explanation of technical interfaces</strong> 📃</h3>
+<div class="sect3">
+<h4 id="_explanation_of_technical_interfaces">3.2.1. <strong>Explanation of technical interfaces</strong> 📃</h4>
 <div class="paragraph">
 <p>The application follows a <strong>hexagonal architecture pattern</strong>, with the following components:</p>
 </div>
-<div class="sect3">
-<h4 id="_agent_user_external_user">3.3.1. <strong>Agent User (External User)</strong></h4>
+<div class="sect4">
+<h5 id="_agent_user_external_user"><strong>Agent User (External User)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1049,8 +1109,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_web_app_frontend_layer">3.3.2. <strong>Web App (Frontend Layer)</strong></h4>
+<div class="sect4">
+<h5 id="_web_app_frontend_layer"><strong>Web App (Frontend Layer)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1062,8 +1122,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_gateway_service_api_gateway_central_layer">3.3.3. <strong>Gateway Service (API Gateway &amp; Central Layer)</strong></h4>
+<div class="sect4">
+<h5 id="_gateway_service_api_gateway_central_layer"><strong>Gateway Service (API Gateway &amp; Central Layer)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1078,8 +1138,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_domain_business_logic_layer">3.3.4. <strong>Domain (Business Logic Layer)</strong></h4>
+<div class="sect4">
+<h5 id="_domain_business_logic_layer"><strong>Domain (Business Logic Layer)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1091,8 +1151,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_services_layer_microservices_architecture">3.3.5. <strong>Services Layer (Microservices Architecture)</strong></h4>
+<div class="sect4">
+<h5 id="_services_layer_microservices_architecture"><strong>Services Layer (Microservices Architecture)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1107,8 +1167,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_database_layer_persistent_storage">3.3.6. <strong>Database Layer (Persistent Storage)</strong></h4>
+<div class="sect4">
+<h5 id="_database_layer_persistent_storage"><strong>Database Layer (Persistent Storage)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1117,8 +1177,8 @@ together with a mapping table showing the relationships between channels and inp
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_technical_interfaces">3.3.7. <strong>Technical Interfaces</strong></h4>
+<div class="sect4">
+<h5 id="_technical_interfaces"><strong>Technical Interfaces</strong></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1185,6 +1245,7 @@ together with a mapping table showing the relationships between channels and inp
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -1704,37 +1765,31 @@ You will mainly capture scenarios in your documentation to communicate your arch
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>&lt;insert runtime diagram or textual description of the scenario&gt;</em></p>
-</li>
-<li>
-<p><em>&lt;insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.&gt;</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>It is possible to use a sequence diagram:</p>
-</div>
+<h3 id="_runtime_scenario_1_login">6.1. &lt;Runtime Scenario 1 : Login&gt;</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram.png" alt="Sequence diagram" width="332" height="335">
+<img src="./images/LoginDiagram.png" alt="LoginDiagram">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</h3>
-
+<h3 id="_runtime_scenario_2_singup">6.2. &lt;Runtime Scenario 2 SingUp&gt;</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SignInDiagram.png" alt="SignInDiagram">
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="">6.3. &#8230;&#8203;</h3>
-
+<h3 id="_runtime_scenario_3_game_cycle">6.3. &lt;Runtime Scenario 3 Game cycle&gt;</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/GameCycleDiagram.png" alt="GameCycleDiagram">
 </div>
-<div class="sect2">
-<h3 id="_runtime_scenario_n">6.4. &lt;Runtime Scenario n&gt;</h3>
+</div>
+<div class="paragraph">
+<p>.</p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
