@@ -3,6 +3,14 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
+This project aims to develop an interactive web application,
+where users are given an image of a place and a series of options
+to try and guess where this place might be.
+The key innovation of the project relies on the integration of a Large Language Model (LLM),
+allowing users to interact with an AI assistant to request hints about the location.
+This mechanic enhances the gameplay by offering contextual clues, improving accessibility,
+and creating a more engaging user experience.
+
 ifdef::arc42help[]
 [role="arc42help"]
 ****
@@ -18,6 +26,19 @@ These include
 endif::arc42help[]
 
 === Requirements Overview
+
+The application must meet the following functional and non-functional requirements.
+
+Functional Requirements:
+
+- Users must be able to access the application through a web interface.
+- Users must be able to create an account and log in.
+- System must be able of displaying an image and options.
+- Users must be able to communicate with an LLM for hints about their location.
+- System must set a time limit to answer the given question.
+- The application must allow users to submit their guess.
+- Users must be able to review their past games.
+- The system must provide APIs for managing users and game data.
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -46,6 +67,16 @@ See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 docum
 endif::arc42help[]
 
 === Quality Goals
+
+[options="header", cols="1,2"]
+|===
+| Goal         | Description
+| Usability   | The application must be intuitive and allow seamless navigation and interaction.
+| Performance | The system should respond promptly to user actions, ensuring smooth gameplay.
+| Security    | User authentication and data storage must be handled securely.
+| Scalability | The architecture must support a growing number of users without performance degradation.
+| Accessibility | The application must be accessible to users with different needs, including colorblind-friendly design and screen reader compatibility.
+|===
 
 ifdef::arc42help[]
 [role="arc42help"]
@@ -96,6 +127,12 @@ endif::arc42help[]
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+| (Team Member) Ignacio | https://github.com/nack-fs | To create a web application that provides value to stakeholders and learn in the development process.
+| (Team Member) José | https://github.com/josemzuvi | To create a web application that provides value to stakeholders and learn in the development process.
+| (Team Member) Leonardo | https://github.com/UnioviLCM27 | To create a web application that provides value to stakeholders and learn in the development process.
+| (Team Member) Daniel | https://github.com/danigpt | To create a web application that provides value to stakeholders and learn in the development process.
+| (Team Member) Miguel | https://github.com/MigFeH | To create a web application that provides value to stakeholders and learn in the development process.
+| (Teacher) Diego Martín | https://github.com/DiegoMfer | Demonstrated understanding of web development principles through a functional, well-coded application that meets project requirements and learning objectives.
+| (Teacher) Emilio Labra | https://github.com/labra | Demonstrated understanding of web development principles through a functional, well-coded application that meets project requirements and learning objectives.
+| Future Course Students | ... | To have the project as a reference or start point to their own project.
 |===

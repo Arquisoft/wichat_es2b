@@ -1,3 +1,30 @@
+<table>
+  <tr>
+    <th>Contributor 👤</th>
+    <th>Contact 📞</th>
+  </tr>
+  <tr>
+    <td>Leonardo Carone Menes</td>
+    <td><a href="https://github.com/UnioviLCM27">Leonardo's github profile</a></td>
+  </tr>
+  <tr>
+    <td>José Martínez de Zuvillaga</td>
+    <td><a href="https://github.com/josemzuvi">José's github profile</a></td>
+  </tr>
+  <tr>
+    <td>Ignacio Fernández Suárez</td>
+    <td><a href="https://github.com/nack-fs">Ignacio's github profile</a></td>
+  </tr>
+  <tr>
+    <td>Miguel Fernández Huerta</td>
+    <td><a href="https://github.com/MigFeH">Miguel's github profile</a></td>
+  </tr>
+  <tr>
+    <td>Daniel González Pérez</td>
+    <td><a href="https://github.com/danigpt">Daniel's github profile</a></td>
+  </tr>
+</table>
+
 # wichat_es2b
 
 [![Actions Status](https://github.com/arquisoft/wichat_es2b/workflows/CI%20for%20wichat_es2b/badge.svg)](https://github.com/arquisoft/wichat_es2b/actions)

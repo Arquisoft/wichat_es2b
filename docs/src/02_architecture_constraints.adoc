@@ -3,27 +3,35 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+The application must be developed according to some constraints that were defined by the client. These constraints are meant to be the cornerstones of our project as they are mandatory and provide a baseline to work on. The following tables will define the constraints.
 
-ifdef::arc42help[]
-[role="arc42help"]
-****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+*Technical constraints*
+|===
+| *Constraint* | *Description* 
+| Webbapp accesibility | The application must be accesible throgh a browser
+| Wikidata | The validity of questions and the questions themselves must be obtained through their Api
+| Github | It is imperative that we use Github for the recording of all of our work
+| Registry | It is obligatory that the program saves and stores data on the different users through a profile
+| Use of LLM model | We are to build a chatbot for the practice, wich means utilizing an LLM
+|===
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+*Organizational constraints*
+|===
+| *Constraint* | *Description* 
+| Meetings | The team is due to an obligatory meeting per week at the time of Software Architecture class
+| Deliveries | There are three separate times where the project will be presented and those times are set.
+| Github | The use of Issues and Pull Requests for the proyects organization is highly sought to the point of necesity
+|===
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
+*Conventional constraints*
+|===
+| *Constraint* | *Description*
+| Documentation in Arc42 | The documentation must follow the Arc42 template
+| Language | It was agreed beforehand that english would be the language chosen for the proyect
+| Github | As the platform we work on we are obligated to learn Githubs conventions
+|===
 
+*Wireframes*
 
-.Further Information
+image::wireframe-XXX.png[align="center", title="XXX Wireframe"]
 
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
-
-****
-endif::arc42help[]

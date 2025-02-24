@@ -50,7 +50,45 @@ In any case the tree should include links to the scenarios of the following sect
 ****
 endif::arc42help[]
 
+image::10.1_Quality_Tree.png[]
+
 === Quality Scenarios
+
+[options="header" cols="1,2,2,2"]
+|===
+| Quality Attribute | Scenario | Motivation | Expected Response
+
+| Performance
+| A user requests a hint from the LLM and expects a fast response.
+| Avoid delays that could affect the overall experience.
+| The LLM responds fast enough so the user isn't kept waiting for it.
+
+| Security
+| A user attempts to access another user's information without authorization.
+| Protect users' privacy and data confidentiality.
+| The system denies the request and logs the unauthorized access attempt.
+
+| Usability
+| A new user accesses the application and must start a game within reasonable time.
+| Ensure a low learning curve and an intuitive experience.
+| The user quickly finds the main options without external documentation.
+
+| Maintainability
+| Some collaborator is trying to edit, fix or add a new functionality to the app.
+| Ensure the changes can be done seamlessly without having to refactor or edit other areas of the code.
+| The application continues functioning correctly after the changes thanks t a division of the functionality in blocks.
+
+| Compatibility
+| The app is opened in different devices with varying form factors.
+| Ensure the game remains functional and all elements are correctly displayed.
+| The app adapts to the form factor of the user device without impacting the
+experience.
+
+| Reliability
+| The app has been available for a long time.
+| Ensure the app continues to work even after it's dependencies have been updated allowing it to work correctly over time.
+| The app keeps working correctly without any apparent or changes to it.
+|===  
 
 ifdef::arc42help[]
 [role="arc42help"]

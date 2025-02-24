@@ -3,32 +3,37 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-solution-strategy]]
 == Solution Strategy
 
+What follows is a short summary and explanation of the fundamental decisions and solution strategies, that shape our system's architecture
 
-ifdef::arc42help[]
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape system architecture. It includes
+=== Technology
+* **Visual Studio Code** as a framework due to its versatility in developing applications with different programming languages and its compatibility with Git.
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+* **Docker** for deploying the project.
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the foundation for many other detailed decisions or implementation rules.
+* **GitHub Pages** for deploying the documentation.
 
-.Form
-Keep the explanations of such key decisions short.
+=== High-level decomposition
+|===
+| *Quality goal* | *Scenario* | *Solution approach* | *Link to Details*
+| Usability | A new user quickly understands how to play and how to ask for basic hints. | Intuitive interface, interactive tutorial, clear design of the interface for interacting with the predefined hint system. | [Link to UI/UX Documentation]
+| Performance | The game loads images and predefined hints in under 1 second. | Image optimization, predefined hint caching, use of CDN for static resources. | [Link to Performance Optimization Documentation]
+| Hint Accuracy | Predefined hints are relevant and help players progress. | Creation of a set of well-designed and reviewed hints for each image, validation with user testing. | [Link to Hint Design Documentation]
+| Testability | Developers can run automated tests to verify game functionality. | Modular code design, implementation of unit and integration tests, use of testing frameworks. | [Link to Testability Documentation]
+|===
 
-Motivate what was decided and why it was decided that way,
-based upon problem statement, quality goals and key constraints.
-Refer to details in the following sections.
+=== Approaches to achieve quality objectives
 
+|===
+| *Quality goal* | *Scenario* | *Solution approach* | *Link to Details*
+| Usability | Players on different devices enjoy a consistent experience. | Responsive CSS design, cross-browser and device testing, use of responsive UI frameworks. | [Link to Responsive Design Documentation]
+| Performance | The game maintains a smooth experience with multiple concurrent players. | Scalable backend with Docker and orchestration (e.g., Kubernetes), load balancing, database query optimization. | [Link to Scalability Documentation]
+| Hint Accuracy | Predefined hints are clear and do not generate confusion. | Careful wording of hints, usability testing with real players, feedback system to improve hints. | [Link to Hint Design Documentation]
+| Testability | Code changes do not introduce regressions. | Continuous integration with automated testing, adequate code coverage, test documentation. | [Link to Automated Testing Documentation]
+|===
 
-.Further Information
+=== Relevant organizational decisions
+Currently, we have been meeting once a week, although this may change in the future depending on the team's needs to address different topics during development.
 
-See https://docs.arc42.org/section-4/[Solution Strategy] in the arc42 documentation.
+In most meetings, if not all, all group members participate, and we discuss opinions on different designs and implementations of the application.
 
-****
-endif::arc42help[]
+We also have a WhatsApp group as a fast messaging channel.
