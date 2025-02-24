@@ -460,7 +460,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_explanation_of_technical_interfaces">3.3. <strong>Explanation of technical interfaces</strong> 📃</a></li>
 </ul>
 </li>
-<li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
+<li><a href="#section-solution-strategy">4. Solution Strategy</a>
+<ul class="sectlevel2">
+<li><a href="#_technology">4.1. Technology</a></li>
+<li><a href="#_high_level_decomposition">4.2. High-level decomposition</a></li>
+<li><a href="#_approaches_to_achieve_quality_objectives">4.3. Approaches to achieve quality objectives</a></li>
+<li><a href="#_relevant_organizational_decisions">4.4. Relevant organizational decisions</a></li>
+</ul>
+</li>
 <li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
 <li><a href="#_whitebox_overall_system">5.1. Whitebox Overall System</a></li>
@@ -486,23 +493,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_8_1_application_architecture">9. 8.1. Application Architecture</a></li>
 <li><a href="#_8_2_integration_with_microservices">10. 8.2. Integration with Microservices</a></li>
 <li><a href="#_8_3_data_persistence_and_management">11. 8.3. Data Persistence and Management</a></li>
-<li><a href="#_8_4_1_llm_service">12. 8.4.1. LLM Service</a></li>
-<li><a href="#section-design-decisions">13. Architecture Decisions</a>
+<li><a href="#_8_4_llm_service">12. 8.4. LLM Service</a></li>
+<li><a href="#_8_5_testeability">13. 8.5. Testeability</a></li>
+<li><a href="#_8_6_usability">14. 8.6. Usability</a></li>
+<li><a href="#_8_7_maintainability_scalability">15. 8.7. Maintainability &amp; Scalability</a></li>
+<li><a href="#section-design-decisions">16. Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_main_framework">13.1. Main Framework</a></li>
-<li><a href="#_front_end">13.2. Front-End</a></li>
-<li><a href="#_back_end">13.3. Back-End</a></li>
-<li><a href="#_llm">13.4. LLM</a></li>
+<li><a href="#_main_framework">16.1. Main Framework</a></li>
+<li><a href="#_front_end">16.2. Front-End</a></li>
+<li><a href="#_back_end">16.3. Back-End</a></li>
+<li><a href="#_llm">16.4. LLM</a></li>
 </ul>
 </li>
-<li><a href="#section-quality-scenarios">14. Quality Requirements</a>
+<li><a href="#section-quality-scenarios">17. Quality Requirements</a>
 <ul class="sectlevel2">
-<li><a href="#_quality_tree">14.1. Quality Tree</a></li>
-<li><a href="#_quality_scenarios">14.2. Quality Scenarios</a></li>
+<li><a href="#_quality_tree">17.1. Quality Tree</a></li>
+<li><a href="#_quality_scenarios">17.2. Quality Scenarios</a></li>
 </ul>
 </li>
-<li><a href="#section-technical-risks">15. Risks and Technical Debts</a></li>
-<li><a href="#section-glossary">16. Glossary</a></li>
+<li><a href="#section-technical-risks">18. Risks and Technical Debts</a></li>
+<li><a href="#section-glossary">19. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -558,6 +568,15 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sect1">
 <h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This project aims to develop an interactive web application,
+where users are given an image of a place and a series of options
+to try and guess where this place might be.
+The key innovation of the project relies on the integration of a Large Language Model (LLM),
+allowing users to interact with an AI assistant to request hints about the location.
+This mechanic enhances the gameplay by offering contextual clues, improving accessibility,
+and creating a more engaging user experience.</p>
+</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -587,6 +606,40 @@ These include</p>
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
+<div class="paragraph">
+<p>The application must meet the following functional and non-functional requirements.</p>
+</div>
+<div class="paragraph">
+<p>Functional Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Users must be able to access the application through a web interface.</p>
+</li>
+<li>
+<p>Users must be able to create an account and log in.</p>
+</li>
+<li>
+<p>System must be able of displaying an image and options.</p>
+</li>
+<li>
+<p>Users must be able to communicate with an LLM for hints about their location.</p>
+</li>
+<li>
+<p>System must set a time limit to answer the given question.</p>
+</li>
+<li>
+<p>The application must allow users to submit their guess.</p>
+</li>
+<li>
+<p>Users must be able to review their past games.</p>
+</li>
+<li>
+<p>The system must provide APIs for managing users and game data.</p>
+</li>
+</ul>
+</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -617,6 +670,40 @@ If requirements documents exist this overview should refer to these documents.</
 </div>
 <div class="sect2">
 <h3 id="_quality_goals">1.2. Quality Goals</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Goal</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be intuitive and allow seamless navigation and interaction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The system should respond promptly to user actions, ensuring smooth gameplay.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User authentication and data storage must be handled securely.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture must support a growing number of users without performance degradation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accessibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be accessible to users with different needs, including colorblind-friendly design and screen reader compatibility.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -700,14 +787,44 @@ These stakeholders determine the extent and the level of detail of your work and
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-1&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Team Member) Ignacio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/nack-fs" class="bare">https://github.com/nack-fs</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To create a web application that provides value to stakeholders and learn in the development process.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Team Member) José</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/josemzuvi" class="bare">https://github.com/josemzuvi</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To create a web application that provides value to stakeholders and learn in the development process.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Team Member) Leonardo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/UnioviLCM27" class="bare">https://github.com/UnioviLCM27</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To create a web application that provides value to stakeholders and learn in the development process.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Team Member) Daniel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/danigpt" class="bare">https://github.com/danigpt</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To create a web application that provides value to stakeholders and learn in the development process.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Team Member) Miguel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/MigFeH" class="bare">https://github.com/MigFeH</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To create a web application that provides value to stakeholders and learn in the development process.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Teacher) Diego Martín</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/DiegoMfer" class="bare">https://github.com/DiegoMfer</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Demonstrated understanding of web development principles through a functional, well-coded application that meets project requirements and learning objectives.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Teacher) Emilio Labra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/labra" class="bare">https://github.com/labra</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Demonstrated understanding of web development principles through a functional, well-coded application that meets project requirements and learning objectives.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Future Course Students</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To have the project as a reference or start point to their own project.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1075,48 +1192,124 @@ together with a mapping table showing the relationships between channels and inp
 <div class="sect1">
 <h2 id="section-solution-strategy">4. Solution Strategy</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>A short summary and explanation of the fundamental decisions and solution strategies, that shape system architecture. It includes</p>
+<p>What follows is a short summary and explanation of the fundamental decisions and solution strategies, that shape our system&#8217;s architecture</p>
 </div>
+<div class="sect2">
+<h3 id="_technology">4.1. Technology</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>technology decisions</p>
+<p><strong>Visual Studio Code</strong> as a framework due to its versatility in developing applications with different programming languages and its compatibility with Git.</p>
 </li>
 <li>
-<p>decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern</p>
+<p><strong>Docker</strong> for deploying the project.</p>
 </li>
 <li>
-<p>decisions on how to achieve key quality goals</p>
-</li>
-<li>
-<p>relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.</p>
+<p><strong>GitHub Pages</strong> for deploying the documentation.</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_high_level_decomposition">4.2. High-level decomposition</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quality goal</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Scenario</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Solution approach</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Link to Details</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user quickly understands how to play and how to ask for basic hints.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Intuitive interface, interactive tutorial, clear design of the interface for interacting with the predefined hint system.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to UI/UX Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The game loads images and predefined hints in under 1 second.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Image optimization, predefined hint caching, use of CDN for static resources.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Performance Optimization Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hint Accuracy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Predefined hints are relevant and help players progress.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creation of a set of well-designed and reviewed hints for each image, validation with user testing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Hint Design Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developers can run automated tests to verify game functionality.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modular code design, implementation of unit and integration tests, use of testing frameworks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Testability Documentation]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_approaches_to_achieve_quality_objectives">4.3. Approaches to achieve quality objectives</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quality goal</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Scenario</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Solution approach</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Link to Details</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Players on different devices enjoy a consistent experience.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Responsive CSS design, cross-browser and device testing, use of responsive UI frameworks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Responsive Design Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The game maintains a smooth experience with multiple concurrent players.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalable backend with Docker and orchestration (e.g., Kubernetes), load balancing, database query optimization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Scalability Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hint Accuracy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Predefined hints are clear and do not generate confusion.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Careful wording of hints, usability testing with real players, feedback system to improve hints.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Hint Design Documentation]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code changes do not introduce regressions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continuous integration with automated testing, adequate code coverage, test documentation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Automated Testing Documentation]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_relevant_organizational_decisions">4.4. Relevant organizational decisions</h3>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>These decisions form the cornerstones for your architecture. They are the foundation for many other detailed decisions or implementation rules.</p>
+<p>Currently, we have been meeting once a week, although this may change in the future depending on the team&#8217;s needs to address different topics during development.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Keep the explanations of such key decisions short.</p>
+<p>In most meetings, if not all, all group members participate, and we discuss opinions on different designs and implementations of the application.</p>
 </div>
 <div class="paragraph">
-<p>Motivate what was decided and why it was decided that way,
-based upon problem statement, quality goals and key constraints.
-Refer to details in the following sections.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-4/">Solution Strategy</a> in the arc42 documentation.</p>
-</div>
-</div>
+<p>We also have a WhatsApp group as a fast messaging channel.</p>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1878,7 +2071,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_8_4_1_llm_service">12. 8.4.1. LLM Service</h2>
+<h2 id="_8_4_llm_service">12. 8.4. LLM Service</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1898,11 +2091,96 @@ on this list.</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_5_testeability">13. 8.5. Testeability</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 60%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.1. Unit Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify that each individual unit or component of the application functions correctly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.2. Integration Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check the interaction between different units or components of the application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.3. Functional Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify that the application meets the specified functional requirements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.4. Security Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identify vulnerabilities and ensure the protection of sensitive data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_6_usability">14. 8.6. Usability</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.6.1. Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability ensures products are easy and efficient to use, leading to user satisfaction.  We&#8217;ll prioritize an intuitive design, clear navigation, and accessibility, with a particular focus on making our app user-friendly and requiring a low learning curve.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_7_maintainability_scalability">15. 8.7. Maintainability &amp; Scalability</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.7.1. Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Focuses on how easily software can be modified, fixed, or improved over time. Good maintainability reduces costs and effort for future changes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.7.2. Scalability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addresses the ability of a system to handle increased load or growth. A scalable system can adapt to more users, data, or transactions without significant performance degradation.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-design-decisions">13. Architecture Decisions</h2>
+<h2 id="section-design-decisions">16. Architecture Decisions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>During the application development process, a series of decisions may change due to issues encountered during development, research on the technologies to be used, exploration of different work/organization strategies, etc.</p>
@@ -1911,7 +2189,7 @@ on this list.</p>
 <p>These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:</p>
 </div>
 <div class="sect2">
-<h3 id="_main_framework">13.1. Main Framework</h3>
+<h3 id="_main_framework">16.1. Main Framework</h3>
 <div class="paragraph">
 <p>7/02/2024</p>
 </div>
@@ -1923,7 +2201,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_front_end">13.2. Front-End</h3>
+<h3 id="_front_end">16.2. Front-End</h3>
 <div class="paragraph">
 <p>7/02/2024</p>
 </div>
@@ -1935,7 +2213,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_back_end">13.3. Back-End</h3>
+<h3 id="_back_end">16.3. Back-End</h3>
 <div class="paragraph">
 <p>7/02/2024</p>
 </div>
@@ -1947,7 +2225,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_llm">13.4. LLM</h3>
+<h3 id="_llm">16.4. LLM</h3>
 <div class="paragraph">
 <p>7/02/2024</p>
 </div>
@@ -1962,7 +2240,7 @@ on this list.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-quality-scenarios">14. Quality Requirements</h2>
+<h2 id="section-quality-scenarios">17. Quality Requirements</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -1987,7 +2265,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_tree">14.1. Quality Tree</h3>
+<h3 id="_quality_tree">17.1. Quality Tree</h3>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -2024,7 +2302,62 @@ concrete and measurable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios">14.2. Quality Scenarios</h3>
+<h3 id="_quality_scenarios">17.2. Quality Scenarios</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 28.5714%;">
+<col style="width: 28.5715%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Quality Attribute</th>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Motivation</th>
+<th class="tableblock halign-left valign-top">Expected Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user requests a hint from the LLM and expects a fast response.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avoid delays that could affect the overall experience.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The LLM responds fast enough so the user isn&#8217;t kept waiting for it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user attempts to access another user&#8217;s information without authorization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protect users' privacy and data confidentiality.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The system denies the request and logs the unauthorized access attempt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user accesses the application and must start a game within reasonable time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure a low learning curve and an intuitive experience.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user quickly finds the main options without external documentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some collaborator is trying to edit, fix or add a new functionality to the app.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure the changes can be done seamlessly without having to refactor or edit other areas of the code.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application continues functioning correctly after the changes thanks t a division of the functionality in blocks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compatibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The app is opened in different devices with varying form factors.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure the game remains functional and all elements are correctly displayed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The app adapts to the form factor of the user device without impacting the
+experience.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reliability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The app has been available for a long time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure the app continues to work even after it&#8217;s dependencies have been updated allowing it to work correctly over time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The app keeps working correctly without any apparent or changes to it.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -2068,36 +2401,58 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-technical-risks">15. Risks and Technical Debts</h2>
+<h2 id="section-technical-risks">18. Risks and Technical Debts</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>A list of identified technical risks or technical debts, ordered by priority</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.)</p>
-</div>
-<div class="paragraph">
-<p>This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.</p>
-</div>
-<div class="paragraph">
-<div class="title">Further Information</div>
-<p>See <a href="https://docs.arc42.org/section-11/">Risks and Technical Debt</a> in the arc42 documentation.</p>
-</div>
-</div>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Risk</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Explanation</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Mitigation proposed</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Little knowledge of the technologies to be used</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For all group members, this is the first time developing software that requires implementing an LLM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Search for knowledge on developing applications integrated with LLMs, along with the tools used for this.
+Consult the code and documentation of last year&#8217;s projects to observe the decisions that were made and the technologies they used for the rest of the development</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lack of time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We may face time constraints in fulfilling all the requirements for each deliverable and meeting every deadline</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Try to maintain a steady and sustainable development pace. Prioritize building functional components initially, then iterate and enhance from there</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Coordination and responsibility problems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is probably the first time involvement in developing a project from scratch, including decisions on architecture, design, and implementation, introduces various challenges. Misunderstandings regarding tasks and version control management errors can result in individuals inadvertently disrupting the work of others. Additionally, the necessity to make numerous decisions and reach agreements increases the likelihood of errors, potentially consuming significant time and effort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To ensure effective collaboration and organization, follow the teachers' instructions regarding GitHub, including the use of features such as issues, pull requests, and maintain a disciplined approach to work from all team members, using a Kanban methodology integrated as a feature in GitHub</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Starting off from scratch?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We&#8217;ll have to take the decision of starting our project from scratch or take another project from last year as "inspiration" or as a starting point</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Why not both? Starting off from scratch can be really difficult, but if we have another project that serves as a guide or reference we&#8217;ll be more productive and focus on new functionalities (such as the LLM integration) rather than in the basis development.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version Control Software Use</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GitHub is one of the most (if not the most) popular version control tools in the market, however, some group member may be not acquainted with it, or even if we are, we still have to get to an agreement on how to work properly and consistently (unique commit format for all commits, wiki page rotation, conflict solving, etc.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Starting slow with GitHub (making the project documentation) will help us to get used to it. Later, we&#8217;ll discuss and register decisions on the workflow when developing.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spend more time developing than thinking</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This one is pretty common, sometimes we just focus on producing huge amounts of code, often forgetting the importance of the previous phases, the ones that draw the line between a software developer and a software engineer/software architect.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Question the decisions "made on autopilot", remembering the goals we need to achieve when the application is done, and working smarter, not harder, on getting there.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary">16. Glossary</h2>
+<h2 id="section-glossary">19. Glossary</h2>
 <div class="sectionbody">
 <div class="sidebarblock arc42help">
 <div class="content">
