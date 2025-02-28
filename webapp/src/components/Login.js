@@ -36,6 +36,9 @@ const Login = () => {
       setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
 
+      // asigna a la variable message el mensaje de bienvenida tras logearse el usuario correctamente
+      setMessage("Bienvenido " + username);
+
       setOpenSnackbar(true);
     } catch (error) {
       setError(error.response.data.error);
