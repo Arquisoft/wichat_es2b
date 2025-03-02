@@ -1,15 +1,23 @@
-
-
 export default class QuestionGeneration {
+
     constructor(ui) {
-        this.ui = ui; // Recibir instancia de QuestionPresentation
+        this.ui = ui;
+        this.questionsCache = []; // Cache para almacenar preguntas
+        this.currentIndex = 0;
     }
 
+    //Inicializa la generacion (si no hay mas lugares en cache hace otra consulta, si hay la saca de ahi)
     async fetchQuestions() {
-        const { answers, correct } = await this.shuffleAnswers();
+        if (this.questionsCache.length === 0) {
+            this.questionsCache = await this.generateQuestions();
+            this.currentIndex = 0;
+        }
+
+        const { answers, correct } = this.getNextQuestion();
         this.ui.renderQuestion(answers, correct);
     }
 
+    //Consulta a wikidata para sacar imagenes y lugares
     async generateQuestions() {
         const WikidataUrl = "https://query.wikidata.org/sparql";
         const sparqlQuery = `
@@ -19,52 +27,56 @@ export default class QuestionGeneration {
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
         }
         ORDER BY RAND()
-        LIMIT 10`;
+        LIMIT 41`; 
 
-        // Agregar un timestamp único para evitar la caché
-        const url = WikidataUrl + "?query=" + encodeURIComponent(sparqlQuery) + "&format=json&timestamp=" + new Date().getTime();
-        
         try {
-            const response = await fetch(url, { headers: { 'Accept': 'application/sparql-results+json' } });
+            const response = await fetch(WikidataUrl + "?query=" + encodeURIComponent(sparqlQuery) + "&format=json", {
+                headers: { 'Accept': 'application/sparql-results+json' }
+            });
             const data = await response.json();
 
-            const results = {};
-            data.results.bindings.forEach(item => {
-                results[item.cityLabel.value] = item.image.value;
-            });
-
-            return results;
+            return data.results.bindings.map(item => ({
+                city: item.cityLabel.value,
+                image: item.image.value
+            }));
         } catch (error) {
             console.error("Error fetching data:", error);
-            return {};
+            return [];
         }
     }
 
-    async shuffleAnswers() {
-        let options = await this.generateQuestions();
-
-        let keys = Object.keys(options);
-        if (keys.length < 4) {
-            console.error("No hay suficientes ciudades para generar preguntas.");
+    //Saca datos de la cache siempre que haya aun imagenes en esta.
+    getNextQuestion() {
+        // Si quedan menos de 4 preguntas, recargamos antes de que se agoten
+        if (this.currentIndex + 4 > this.questionsCache.length) {
+            console.warn("Recargando preguntas...");
+            this.questionsCache = [];
+            this.fetchQuestions();
             return { answers: {}, correct: null };
         }
-
-        let shuffledKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 4);
-        let correct = shuffledKeys[Math.floor(Math.random() * shuffledKeys.length)];
-
-        let answers = shuffledKeys.reduce((acc, key) => {
-            acc[key] = options[key];
+    
+        let options = this.questionsCache.slice(this.currentIndex, this.currentIndex + 4);
+        this.currentIndex += 4;
+    
+        // Aseguramos que haya exactamente 4 opciones
+        while (options.length < 4 && this.currentIndex < this.questionsCache.length) {
+            options.push(this.questionsCache[this.currentIndex]);
+            this.currentIndex++;
+        }
+    
+        let correctCity = options[Math.floor(Math.random() * options.length)];
+    
+        let answers = options.reduce((acc, item) => {
+            acc[item.city] = item.image;
             return acc;
         }, {});
-
-        return { answers, correct };
+    
+        return { answers, correct: correctCity.city };
     }
-
+    
+    //Comprueba resultados
     checkAnswer(selected, correct) {
-        // Pasa un valor booleano a showResult
         this.ui.showResult(selected === correct);
     }
 }
 
-
-new QuestionGeneration();
