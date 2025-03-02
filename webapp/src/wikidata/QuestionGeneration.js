@@ -27,7 +27,7 @@ export default class QuestionGeneration {
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
         }
         ORDER BY RAND()
-        LIMIT 41`; 
+        LIMIT 40`;
 
         try {
             const response = await fetch(WikidataUrl + "?query=" + encodeURIComponent(sparqlQuery) + "&format=json", {
