@@ -1098,7 +1098,7 @@ together with a mapping table showing the relationships between channels and inp
 <div class="sect3">
 <h4 id="_explanation_of_technical_interfaces">3.2.1. <strong>Explanation of technical interfaces</strong> 📃</h4>
 <div class="paragraph">
-<p>The application follows a <strong>hexagonal architecture pattern</strong>, with the following components:</p>
+<p>The application follows an <strong>MVC (Model-View-Controller) architectural pattern</strong> using <strong>Node.js</strong> and <strong>MongoDB</strong>, with the following components:</p>
 </div>
 <div class="sect4">
 <h5 id="_agent_user_external_user"><strong>Agent User (External User)</strong></h5>
@@ -1111,11 +1111,11 @@ together with a mapping table showing the relationships between channels and inp
 </div>
 </div>
 <div class="sect4">
-<h5 id="_web_app_frontend_layer"><strong>Web App (Frontend Layer)</strong></h5>
+<h5 id="_web_app_view_layer_frontend"><strong>Web App (View Layer - Frontend)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Sends <strong>requests</strong> to and receives <strong>responses</strong> from the <strong>Gateway Service</strong>.</p>
+<p>Sends <strong>requests</strong> to and receives <strong>responses</strong> from the <strong>Backend (Controller Layer)</strong>.</p>
 </li>
 <li>
 <p>Acts as a bridge between the external user and the backend services.</p>
@@ -1124,56 +1124,46 @@ together with a mapping table showing the relationships between channels and inp
 </div>
 </div>
 <div class="sect4">
-<h5 id="_gateway_service_api_gateway_central_layer"><strong>Gateway Service (API Gateway &amp; Central Layer)</strong></h5>
+<h5 id="_backend_controller_layer_node_js_api"><strong>Backend (Controller Layer - Node.js API)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Central hub that manages communication between different services.</p>
+<p>Central hub that manages communication between different components.</p>
 </li>
 <li>
 <p>Handles authentication, user management, and interaction with external components.</p>
 </li>
 <li>
-<p>Uses <strong>JPA (Java Persistence API)</strong> to interact with the <strong>MySQL database</strong>.</p>
+<p>Routes requests and calls appropriate services in the <strong>Service Layer</strong>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_domain_business_logic_layer"><strong>Domain (Business Logic Layer)</strong></h5>
+<h5 id="_service_layer_business_logic"><strong>Service Layer (Business Logic)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
 <p>Contains core business logic.</p>
 </li>
 <li>
-<p>Works closely with the <strong>Gateway Service</strong> to process requests.</p>
+<p>Processes requests received from the <strong>Controller Layer</strong>.</p>
+</li>
+<li>
+<p>Interfaces with the <strong>Model Layer</strong> to retrieve or store data.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_services_layer_microservices_architecture"><strong>Services Layer (Microservices Architecture)</strong></h5>
+<h5 id="_model_layer_database_data_access_layer"><strong>Model Layer (Database &amp; Data Access Layer)</strong></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>User Service</strong>: Manages user-related operations.</p>
+<p>Uses <strong>Mongoose ORM</strong> to interact with the <strong>MongoDB database</strong>.</p>
 </li>
 <li>
-<p><strong>Auth Service</strong>: Handles authentication and authorization.</p>
-</li>
-<li>
-<p><strong>LLM Service</strong>: Interfaces with a Large Language Model (LLM) for AI-driven responses.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_database_layer_persistent_storage"><strong>Database Layer (Persistent Storage)</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>MySQL Database</strong>: Stores application data, accessed via <strong>JPA</strong>.</p>
+<p>Defines schemas and handles database operations.</p>
 </li>
 </ul>
 </div>
@@ -1183,16 +1173,16 @@ together with a mapping table showing the relationships between channels and inp
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Web App &amp; Gateway Service</strong>: HTTP Requests/Responses.</p>
+<p><strong>Web App &amp; Backend</strong>: HTTP Requests/Responses (REST API).</p>
 </li>
 <li>
-<p><strong>Gateway Service &amp; Services Layer (User, Auth, LLM Services)</strong>: REST API or gRPC communication.</p>
+<p><strong>Backend &amp; Service Layer</strong>: Internal function calls.</p>
 </li>
 <li>
-<p><strong>Gateway Service &amp; MySQL</strong>: JPA-based database interaction.</p>
+<p><strong>Service Layer &amp; Model Layer</strong>: Database queries.</p>
 </li>
 <li>
-<p><strong>Gateway Service &amp; Domain</strong>: Internal service calls.</p>
+<p><strong>Model Layer &amp; MongoDB</strong>: Data storage and retrieval.</p>
 </li>
 </ul>
 </div>
@@ -1219,28 +1209,23 @@ together with a mapping table showing the relationships between channels and inp
 <td class="tableblock halign-left valign-top"><p class="tableblock">UI Responses</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Backend (Controller Layer)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">API Calls</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Processed Data</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User Service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User Data Requests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User Data Responses</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service Layer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Logic Requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Logic Responses</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Auth Service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication Requests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Auth Tokens</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model Layer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database Queries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stored/Retrieved Data</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LLM Service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AI Queries</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AI Responses</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL Database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Queries via JPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Queries</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stored Data</p></td>
 </tr>
 </tbody>
@@ -2336,7 +2321,7 @@ Consult the code and documentation of last year&#8217;s projects to observe the 
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2025-02-17 13:29:17 +0100
+Last updated 2025-02-28 14:03:09 +0100
 </div>
 </div>
 </body>
