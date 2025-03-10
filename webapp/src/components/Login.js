@@ -84,17 +84,6 @@ const Login = () => {
     }
   };
 
-  // DataBase - Create a new user
-  const createNewUser = async (username, password) => {
-    try {
-      const userData = { username, password };
-      const newUser = await UserService.createUser(userData);
-      return newUser;
-    } catch (error) {
-      throw error;
-    }
-  };
-
   const displayCreationDate = (createdAt) => {
     return new Date(createdAt).toLocaleDateString();
   };
