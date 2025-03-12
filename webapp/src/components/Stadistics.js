@@ -1,35 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Typography, Container } from '@mui/material';
+import UserService from '../database/DAO';
 
 const Stadistics = () => {
+  const [userStats, setUserStats] = useState(null);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId'); 
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const user = await UserService.getUserById(userId);
+        if (user) {
+          const stats = user.games.reduce(
+            (acc, game) => {
+              acc.gamesPlayed++;
+              acc.correctAnswers += game.correctAnswers;
+              acc.wrongAnswers += game.incorrectAnswers;
+              acc.times.push(...game.responseTimes);
+              return acc;
+            },
+            { gamesPlayed: 0, correctAnswers: 0, wrongAnswers: 0, times: [] }
+          );
+          setUserStats(stats);
+        }
+      } catch (error) {
+        console.error('Error fetching user stats:', error);
+      }
+    };
+    fetchStats();
+  }, [userId]);
 
   const handleBackClick = () => {
     navigate('/menu');
   };
 
-  // Placeholder data, replace with actual data from the database
-  const stats = {
-    gamesPlayed: 10,
-    correctAnswers: 50,
-    wrongAnswers: 20,
-    times: [120, 150, 180, 200, 220, 240, 260, 280, 300, 320]
+  const handleRegisterStats = async () => {
+    try {
+      const newStats = {
+        correctAnswers: 5,
+        incorrectAnswers: 3,
+        responseTimes: [100, 150, 200]
+      };
+      await UserService.registerGame(userId, newStats.correctAnswers, newStats.incorrectAnswers, newStats.responseTimes);
+      alert("Estadísticas registradas correctamente.");
+    } catch (error) {
+      console.error('Error registering stats:', error);
+    }
   };
 
   return (
-    <div>
-      <h1>Estadísticas</h1>
-      <p>Partidas jugadas: {stats.gamesPlayed}</p>
-      <p>Preguntas acertadas: {stats.correctAnswers}</p>
-      <p>Preguntas falladas: {stats.wrongAnswers}</p>
-      <h2>Tiempos por partida:</h2>
-      <ul>
-        {stats.times.map((time, index) => (
-          <li key={index}>Partida {index + 1}: {time} segundos</li>
-        ))}
-      </ul>
-      <button onClick={handleBackClick}>Volver</button>
-    </div>
+    <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
+      <Typography variant="h5" align="center">Estadísticas</Typography>
+      {userStats ? (
+        <div>
+          <Typography variant="body1">Partidas jugadas: {userStats.gamesPlayed}</Typography>
+          <Typography variant="body1">Preguntas acertadas: {userStats.correctAnswers}</Typography>
+          <Typography variant="body1">Preguntas falladas: {userStats.wrongAnswers}</Typography>
+          <Typography variant="h6">Tiempos por partida:</Typography>
+          <ul>
+            {userStats.times.map((time, index) => (
+              <li key={index}>Partida {index + 1}: {time} segundos</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <Typography variant="body1">Cargando estadísticas...</Typography>
+      )}
+      <Button variant="contained" color="primary" onClick={handleRegisterStats} sx={{ marginTop: 2 }}>
+        Registrar Estadísticas
+      </Button>
+      <Button variant="contained" color="secondary" onClick={handleBackClick} sx={{ marginTop: 2 }}>
+        Volver
+      </Button>
+    </Container>
   );
 };
 

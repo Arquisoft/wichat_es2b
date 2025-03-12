@@ -22,6 +22,7 @@ const gameSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
+  user_id : Long,
   username: { type: String, unique: true, required: true },
   realName: String,
   lastName: String,

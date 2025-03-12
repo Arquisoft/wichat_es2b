@@ -1,9 +1,9 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import { Typewriter } from "react-simple-typewriter";
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
 import UserService from '../database/DAO';
 
 const Login = () => {
@@ -24,20 +24,22 @@ const Login = () => {
     try {
       if (!username) {
         setError({ field: "username", message: "Username is required" });
+        return;
+
       } else if (!password) {
         setError({ field: "password", message: "Password is required" });
+        return;
       }
 
-      try {
-        const existingUser = await checkIfUserExists(username); // revisar
-        if (!existingUser) {
-          const newUser = await createNewUser(username, password);
-          setCreatedAt(newUser.createdAt);
-        } else {
-          setCreatedAt(existingUser.createdAt);
-        }
-      } catch (error) {
-        setError({ field: 'error', message: "Error checking or creating user" });
+      const existingUser = await UserService.findByUsername(username);
+      if (!existingUser) {
+        setError("User does not exist");
+        return;
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+      if (!isPasswordValid) {
+        setError("Incorrect password");
         return;
       }
 
@@ -53,35 +55,26 @@ const Login = () => {
         setMessage(messageResponse.data.answer);
       }
 
-      // Extract data from the response
-      const { createdAt: userCreatedAt } = response.data;
+      const { createdAt: userCreatedAt, userId } = response.data;
 
+      localStorage.setItem("userId", userId);
       setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
       setOpenSnackbar(true);
 
-      navigate("/menu"); // tras un login correcto, redirigimos al menú (donde está el juego, ver estadísticas, etc.)
+      navigate("/menu");
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 401) {
-          setError({ field: 'error', message: error.response.data.error});
-        } else if (error.response.status === 400) {
-          setError({ field: 'error', message: "Username or password are incorrect" });
-        }
+      const status = error.response?.status;
+      const errorMessage = error.response?.data?.error || "An unexpected error occurred";
+  
+      if (status === 401) {
+        setError({ field: 'error', message: errorMessage });
+      } else if (status === 400) {
+        setError({ field: 'error', message: "Username or password are incorrect" });
       } else {
-        setError({ field: 'error', message: "An error occurred" });
+        setError({ field: 'error', message: "An error occurred. Please try again." });
       }
-    }
-  };
-
-  // DataBase - Check id user exists
-  const checkIfUserExists = async (username) => {
-    try {
-      const user = await UserService.getUserById(username);
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    }  
   };
 
   const displayCreationDate = (createdAt) => {
@@ -97,10 +90,10 @@ const Login = () => {
         {loginSuccess ? (
           <div>
             <Typewriter
-              words={[message]} // Pass your message as an array of strings
+              words={[message]}
               cursor
               cursorStyle="|"
-              typeSpeed={50} // Typing speed in ms
+              typeSpeed={50}
             />
             <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
               Your account was created on {displayCreationDate(createdAt)}.
@@ -112,7 +105,7 @@ const Login = () => {
               Login
             </Typography>
 
-            {error && error.field === 'error' && ( // Show error message
+            {error && error.field === 'error' && (
               <Typography component="p" variant="body1" sx={{ color: 'red', marginTop: 2 }}>
                 {error.message}
               </Typography>
