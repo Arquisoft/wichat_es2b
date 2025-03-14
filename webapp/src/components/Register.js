@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
 import bcrypt from 'bcryptjs';
-import UserService from '../database/DAO';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -22,15 +21,15 @@ const Register = () => {
         return;
       }
 
-      const existingUser = await UserService.findByUsername(username);
-      if (existingUser) {
+      const response = await axios.post(`${apiEndpoint}/check-username`, { username });
+      if (response.data.exists) {
         setError("Username is already taken");
         return;
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const response = await axios.post(`${apiEndpoint}/adduser`, { username, password: hashedPassword });
+      const registerResponse = await axios.post(`${apiEndpoint}/adduser`, { username, password: hashedPassword });
 
       setOpenSnackbar(true);
       setTimeout(() => navigate('/login'), 2000);

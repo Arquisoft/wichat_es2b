@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography, Container } from '@mui/material';
-import UserService from '../database/DAO';
+import axios from 'axios';
+
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 const Stadistics = () => {
   const [userStats, setUserStats] = useState(null);
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId'); 
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const user = await UserService.getUserById(userId);
-        if (user) {
-          const stats = user.games.reduce(
+        const response = await axios.get(`${apiEndpoint}/user-stats/${userId}`);
+        if (response.data) {
+          const stats = response.data.games.reduce(
             (acc, game) => {
               acc.gamesPlayed++;
               acc.correctAnswers += game.correctAnswers;
@@ -43,7 +45,12 @@ const Stadistics = () => {
         incorrectAnswers: 3,
         responseTimes: [100, 150, 200]
       };
-      await UserService.registerGame(userId, newStats.correctAnswers, newStats.incorrectAnswers, newStats.responseTimes);
+      await axios.post(`${apiEndpoint}/register-game`, {
+        userId,
+        correctAnswers: newStats.correctAnswers,
+        incorrectAnswers: newStats.incorrectAnswers,
+        responseTimes: newStats.responseTimes
+      });
       alert("Estadísticas registradas correctamente.");
     } catch (error) {
       console.error('Error registering stats:', error);

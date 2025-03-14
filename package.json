@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "mongose": "^0.0.2-security"
+    "mongose": "^0.0.2-security",
+    "moongose": "^1.0.0"
   }
 }

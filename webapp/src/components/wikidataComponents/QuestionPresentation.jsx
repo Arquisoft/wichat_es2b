@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
-import UserService from "../database/DAO";
+import UserService from "../../database/DAO";
 
 const QuestionPresentation = ({ game, navigate }) => {
   const [question, setQuestion] = useState({ answers: {}, correct: "" });

@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 
 async function connectDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/usersDB', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect('mongodb://localhost:27017/usersDB');
     console.log('Database connected successfully');
   } catch (error) {
     console.error('Database connection error:', error);
@@ -21,8 +18,10 @@ const gameSchema = new mongoose.Schema({
   responseTimes: [Number]
 });
 
+const { v4: uuidv4 } = require('uuid');
+
 const userSchema = new mongoose.Schema({
-  user_id : Long,
+  user_id: { type: String, default: () => uuidv4() },
   username: { type: String, unique: true, required: true },
   realName: String,
   lastName: String,
@@ -35,6 +34,10 @@ const User = mongoose.model('User', userSchema);
 class UserService {
   static async createUser(userData) {
     try {
+      const existingUser = await User.findOne({ username: userData.username });
+      if (existingUser) {
+        throw new Error('Username already exists');
+      }
       const user = new User(userData);
       return await user.save();
     } catch (error) {
