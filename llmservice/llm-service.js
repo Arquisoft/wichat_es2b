@@ -12,18 +12,20 @@ const llmConfigs = {
   gemini: {
     url: (apiKey) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
     transformRequest: (question) => ({
-      contents: [{ parts: [{ text: question }] }]
+      contents: [{ 
+        parts: [{ 
+          text: `Estoy pensando en una ciudad. Te daré pistas si me preguntas, pero no puedo decirte directamente cuál es. Pregunta sabiamente. \n\n ${question}`
+        }] 
+      }]
     }),
     transformResponse: (response) => response.data.candidates[0]?.content?.parts[0]?.text
   },
   empathy: {
-    //url: () => 'https://empathyai.staging.empathy.co/v1/chat/completions',
     url: () => 'https://empathyai.prod.empathy.co/v1/chat/completions',
     transformRequest: (question) => ({
-      //model: "qwen/Qwen2.5-Coder-7B-Instruct",
       model: "mistralai/Mistral-7B-Instruct-v0.3",
       messages: [
-        { role: "system", content: "You are a helpful assistant." },
+        { role: "system", content: "Estoy pensando en una ciudad. Te daré pistas si me preguntas, pero no puedo decirte directamente cuál es. Pregunta sabiamente." },
         { role: "user", content: question }
       ]
     }),
@@ -34,6 +36,7 @@ const llmConfigs = {
     })
   }
 };
+
 
 // Function to validate required fields in the request body
 function validateRequiredFields(req, requiredFields) {
