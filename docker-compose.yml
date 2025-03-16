@@ -47,6 +47,8 @@ services:
       - "8003:8003"
     networks:
       - mynetwork
+    environment:
+      LLM_API_KEY: ${LLM_API_KEY}
 
   gatewayservice:
     container_name: gatewayservice-wichat_es2b

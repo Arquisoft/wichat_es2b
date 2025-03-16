@@ -7,6 +7,9 @@ const port = 8003;
 // Middleware to parse JSON in request body
 app.use(express.json());
 
+// Obtener API Key desde las variables de entorno
+const apiKey = process.env.LLM_API_KEY;
+
 // Define configurations for different LLM APIs
 const llmConfigs = {
   gemini: {
@@ -30,7 +33,7 @@ const llmConfigs = {
       ]
     }),
     transformResponse: (response) => response.data.choices[0]?.message?.content,
-    headers: (apiKey) => ({
+    headers: () => ({
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json'
     })
