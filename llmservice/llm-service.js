@@ -1,3 +1,4 @@
+require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
 
@@ -73,9 +74,17 @@ async function sendQuestionToLLM(question, apiKey, model = 'gemini') {
 app.post('/ask', async (req, res) => {
   try {
     // Check if required fields are present in the request body
-    validateRequiredFields(req, ['question', 'model', 'apiKey']);
+    validateRequiredFields(req, ['question', 'model']);
 
-    const { question, model, apiKey } = req.body;
+    const { question, model } = req.body;
+
+    let apiKey = req.body.apiKey; //Extraemos la API key a parte
+
+    //Si no está presente su valor, la extraemos con la utilidad dotenv
+    if(!apiKey || apiKey.trim() === ''){
+      apiKey = process.env.REACT_APP_LLM_API_KEY;
+    }
+
     const answer = await sendQuestionToLLM(question, apiKey, model);
     res.json({ answer });
 

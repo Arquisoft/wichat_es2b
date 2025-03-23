@@ -9,12 +9,13 @@
   "license": "ISC",
   "description": "",
   "homepage": "https://github.com/arquisoft/wichat_es2b#readme",
-    "dependencies": {
-        "axios": "^1.7.9",
-        "express": "^4.21.2"
-    },
-    "devDependencies": {
-        "jest": "^29.7.0",
-        "supertest": "^7.0.0"
-    }
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
 }
