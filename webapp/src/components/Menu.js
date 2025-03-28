@@ -1,42 +1,35 @@
 import React from 'react';
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/system';
 
 import '../components/style/Home.css';
+
+const ImageButton = styled('img')({
+    width: "100%",
+    maxWidth: "50%",
+    height: "auto",
+    cursor: "pointer",
+    display: "block",
+});
 
 const Menu = () => {
     const navigate = useNavigate();
 
     const handlePageChange = (page) => () => {
         navigate(`/${page}`);
-    }
+    };
 
     return (
-        <Container component="main" maxWidth="md" sx={{ marginTop: 4 }}>
-            <Typography component="h1" variant="h4">
-                Hey!! Are you ready? 🌊
-            </Typography>
-            
-            <Typography component="p" variant="body1" sx={{ marginTop: 2 }}>
-                Select a game to play!
-            </Typography>
+        <Container component="main" maxWidth="md" sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <img src="/MenuUI.png" alt="Hey!! Are you ready? 🌊" style={{ width: "100%", maxWidth: "50%" }} className="logo" />
 
-            <Button variant="contained" color="primary" onClick={handlePageChange("game")}>
-                Non Timed game!
-            </Button>
-
-            <Button variant="contained" color="primary" onClick={handlePageChange("timedGame")}>
-                Timed game!
-            </Button>
-
-            <Button variant="contained" color="primary" onClick={handlePageChange("stadistics")}>
-                Stadistics
-            </Button>
-
-            <Button variant="contained" color="primary" onClick={handlePageChange("ranking")}>
-                Ranking
-            </Button>
-
+            <Box display="flex" flexDirection="column" alignItems="center" gap={2} marginTop={2}>
+                <ImageButton src="/Button_NonTimedGame.png" alt="Non Timed Game" onClick={handlePageChange("game")} />
+                <ImageButton src="/Button_TimedGame.png" alt="Timed Game" onClick={handlePageChange("timedGame")} />
+                <ImageButton src="/Button_Stadistics.png" alt="Statistics" onClick={handlePageChange("stadistics")} />
+                <ImageButton src="/Button_Ranking.png" alt="Ranking" onClick={handlePageChange("ranking")} />
+            </Box>
             <audio id="wave-sound" src="/olas-del-mar.mp3" autoPlay loop></audio>
             <div className="wave-container">
                 <svg className="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

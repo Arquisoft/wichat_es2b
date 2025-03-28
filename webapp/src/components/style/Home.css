@@ -6,8 +6,8 @@
 
 .wave-container {
     width: 100%;
-    position: absolute;
-    bottom: -50em; /* Empieza más abajo */
+    position: fixed; /* Esto hace que la ola siempre se quede fija en la parte inferior de la página */
+    bottom: 0; /* Ubica la ola en la parte más baja de la ventana */
     left: 0;
     overflow: hidden;
     pointer-events: none;
@@ -19,7 +19,7 @@
     display: block;
     position: relative;
     animation: waveAnimation 8s infinite linear;
-    opacity: 0.45; /* Opacidad de la ola */
+    opacity: 0.35; /* Opacidad de la ola */
 }
 
 /* Animación del movimiento de la ola */
