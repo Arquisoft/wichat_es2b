@@ -54,8 +54,19 @@ describe('Navbar Component', () => {
     fireEvent.click(screen.getByText('Menu'));
     expect(window.location.pathname).toBe('/menu');
 
+    // Open the Game menu
     fireEvent.click(screen.getByText('Game'));
+    expect(screen.getByText('Normal')).toBeInTheDocument();
+    expect(screen.getByText('Timed Game')).toBeInTheDocument();
+
+    // Navigate to Normal game
+    fireEvent.click(screen.getByText('Normal'));
     expect(window.location.pathname).toBe('/game');
+
+    // Reopen the Game menu and navigate to Timed Game
+    fireEvent.click(screen.getByText('Game'));
+    fireEvent.click(screen.getByText('Timed Game'));
+    expect(window.location.pathname).toBe('/timedGame');
 
     fireEvent.click(screen.getByText('Statistics'));
     expect(window.location.pathname).toBe('/stadistics');

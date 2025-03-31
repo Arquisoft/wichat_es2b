@@ -83,44 +83,42 @@ async function sendQuestionToLLM(question, apiKey, model = 'gemini',systemInstru
   }
 }
 
-app.post('/ask', async (req, res) => {
-  try {
-    // Check if required fields are present in the request body
-    validateRequiredFields(req, ['question', 'model', 'apiKey']);
-
-    const { question, model, apiKey } = req.body;
-    const answer = await sendQuestionToLLM(question, apiKey);
-    res.json({ answer });
-
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+// Function to check if the response contains the city name
+function validateResponseDoesNotContainCity(response, cityName) {
+  if (response.toLowerCase().includes(cityName.toLowerCase())) {
+    throw new Error('The response contains restricted information.');
   }
-});
+}
 
 app.post('/hint', async (req, res) => {
   try {
-    console.log('Received request:', req.body);
+    //console.log('Received request:', req.body);
 
     // Check if required fields are present in the request body
-    console.log('Validating required fields...');
+    //console.log('Validating required fields...');
     validateRequiredFields(req, ['question', 'model', 'apiKey']);
-    console.log('Validation passed.');
+    //console.log('Validation passed.');
 
     const { question, model, apiKey } = req.body;
-    console.log(`Question: ${question}`);
-    console.log(`Model: ${model}`);
-    console.log(`API Key: ${apiKey}`);
+    const cityName = question.split(':')[0]; // Extract the city name from the question
+    //console.log(`Question: ${question}`);
+    //console.log(`Model: ${model}`);
+    //console.log(`API Key: ${apiKey}`);
+    //console.log(`City Name: ${cityName}`);
 
-    console.log('Sending question to LLM...');
+    //console.log('Sending question to LLM...');
     const answer = await sendQuestionToLLM(question, apiKey, model, gameSystemInstruction);
-    console.log('Received answer from LLM:', answer);
+    //console.log('Received answer from LLM:', answer);
+
+    // Validate that the response does not contain the city name
+    validateResponseDoesNotContainCity(answer, cityName);
 
     res.json({ answer });
-    console.log('Response sent.');
+    //console.log('Response sent.');
 
   } catch (error) {
     console.log('Error occurred:', error.message);
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: 'An error occurred while processing your request.' });
   }
 });
 
