@@ -10,9 +10,12 @@ const YAML = require('yaml')
 const app = express();
 const port = 8000;
 
+//CONFIGURATIONS
+
 const llmServiceUrl = process.env.LLM_SERVICE_URL || 'http://localhost:8003';
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
+const gameServiceUrl = process.env.GAME_SERVICE_URL || 'http://localhost:8004';
 
 app.use(cors());
 app.use(express.json());
@@ -21,68 +24,53 @@ app.use(express.json());
 const metricsMiddleware = promBundle({includeMethod: true});
 app.use(metricsMiddleware);
 
+//ENDPOINTS
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'OK' });
+  res.status(200);
 });
 
-app.get('/game/questions', async (req, res) => {
-  try {
-    // Petición al servicio de preguntas
-    const questionResponse = await axios.get("http://localhost:8004/questions");
-    res.json(questionResponse.data);
-  } catch (error) {
-    res.status(error.response?.status || 500).json({ error: error.response?.data?.error || 'Error fetching questions' });
-  }
+app.get('/api/stats',async(req,res)=>{
+
+    const userResponse = await axios.get(userServiceUrl+'/api/stats', req.body);
+    res.json(userResponse).status(200);
+
+});
+
+app.get('/questions', async (req, res) => {
+
+    const wikiResponse = await axios.get(gameServiceUrl + '/questions', req.body);
+    res.json(wikiResponse).status(200);
+
 });
 
 app.post('/login', async (req, res) => {
-  try {
-    // Forward the login request to the authentication service
+
     const authResponse = await axios.post(authServiceUrl+'/login', req.body);
     res.json(authResponse.data);
-  } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
-  }
+
 });
 
 app.post('/adduser', async (req, res) => {
-  try {
+
     // Forward the add user request to the user service
     const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
     res.json(userResponse.data);
-  } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
-  }
+
 });
 
-app.post('/askllm', async (req, res) => {
-  try {
-    // Forward the add user request to the user service
-    const llmResponse = await axios.post(llmServiceUrl+'/ask', req.body);
-    res.json(llmResponse.data);
-  } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
-  }
-});
+app.post('/hint', async (req, res) => {
 
-app.post('/hintllm', async (req, res) => {
-  console.log("🔍 Solicitud recibida en /hintllm:", req.body);
-  
-  try {
-    console.log("➡️ Reenviando solicitud a:", `${llmServiceUrl}/hint`);
-    
-    const llmResponse = await axios.post(`${llmServiceUrl}/hint`, req.body, {
+    const llmResponse = await axios.post(llmServiceUrl+'/hint', req.body, {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    console.log("✅ Respuesta del LLM recibida:", llmResponse.data);
     res.json(llmResponse.data);
-  } catch (error) {
-    console.error("❌ Error en la solicitud al LLM:", error.message);
-    res.status(error.response?.status || 500).json({ error: "Error interno en hintllm" });
-  }
+
 });
+
 
 // Read the OpenAPI YAML file synchronously
 openapiPath='./openapi.yaml'
@@ -100,6 +88,12 @@ if (fs.existsSync(openapiPath)) {
   console.log("Not configuring OpenAPI. Configuration file not present.")
 }
 
+app.get('/*', (_req,res) =>{
+  res.status(404).json({
+    status:"not found",
+    message:"Wrong URL: Please, check the correct enpoint URL"
+  });
+});
 
 // Start the gateway service
 const server = app.listen(port, () => {

@@ -43,17 +43,6 @@ paths:
                     type: string
                     description: Hashed password
                     example: $2b$10$ZKdNYLWFQxzt5Rei/YTc/OsZNi12YiWz30JeUFHNdAt7MyfmkTuvC
-                  _id:
-                    type: string
-                    description: Identification
-                    example: 65f756db3fa22d227a4b7c7d
-                  createdAt:
-                    type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
-                  ___v:
-                    type: integer
-                    example: '0'                                        
         '400':
           description: Failed to add user.
           content:
@@ -81,42 +70,54 @@ paths:
                     type: string
                     description: Health status.
                     example: OK
-  /game/questions:
+  /api/stats:
     get:
-      summary: Obtiene una nueva pregunta del juego
+      summary: Obtiene estadísticas de usuario
+      operationId: getUserStats
       responses:
-        '200':
-          description: Pregunta generada con respuestas
+        "200":
+          description: Estadísticas del usuario obtenidas con éxito
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  question:
+                  username:
                     type: string
-                    example: "https://example.com/image.jpg"
-                  answers:
-                    type: string
-                    example: "Milán"
-                  correct:
-                    type: string
-                    example: "Paris"
-        '500':
-          description: Error al generar preguntas
-  /users/statistics:
+                    example: "User1234"
+                    description: User ID
+                  score:
+                    type: number
+                    example: 120.0
+                  correctAnswers:
+                    type: integer
+                    example: 12
+                  incorrectAnswers:
+                    type: integer
+                    example: 8
+                  totalRounds:
+                    type: integer
+                    example: 20
+                  accuracy:
+                    type: number
+                    example: 55
+        "500":
+          description: Error en la obtención de estadísticas
+  /questions:
     get:
-      summary: Obtiene las estadísticas de un jugador
+      summary: Obtiene preguntas del juego
+      operationId: getGameQuestions
       responses:
-        '200':
-          description: Estadísticas del jugador
+        "200":
+          description: Preguntas obtenidas con éxito
           content:
             application/json:
               schema:
-                type: object
-
-
-        '500':
-          description: Error al generar preguntas
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Error al obtener preguntas
   /login:
     post:
       summary: Log in to the system.
@@ -178,3 +179,57 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+  /ask:
+    post:
+      summary: Realiza una consulta al modelo de lenguaje (LLM)
+      operationId: askLLM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  example: "¿Cuál es la capital de Francia?"
+      responses:
+        "200":
+          description: Respuesta obtenida del LLM
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: string
+                    example: "Es una ciudad con un monumento famoso"
+        "500":
+          description: Error en la solicitud al LLM
+  /hint:
+    post:
+      summary: Solicita una pista al modelo de lenguaje (LLM)
+      operationId: hintLLM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  example: "¿Cuál es la capital de Alemania?"
+      responses:
+        "200":
+          description: Pista obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hint:
+                    type: string
+                    example: "Empieza con 'B'"
+        "500":
+          description: Error en la solicitud al LLM

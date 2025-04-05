@@ -8,10 +8,10 @@ const port = 8004;
 
 // Configure CORS with specific options
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Allow only your frontend origin
-  methods: ['GET'], // Allow only GET requests
-  allowedHeaders: ['Content-Type'],
-  maxAge: 600 // Cache preflight request results for 10 minutes (600 seconds)
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Allow only your frontend origin
+    methods: ['GET'], // Allow only GET requests
+    allowedHeaders: ['Content-Type'],
+    maxAge: 600 // Cache preflight request results for 10 minutes (600 seconds)
 };
 
 app.use(cors(corsOptions));
