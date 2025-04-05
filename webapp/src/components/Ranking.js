@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Container, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Button, Avatar } from '@mui/material';
 import axios from 'axios';
 
 const apiEndpoint = 'http://localhost:8001';
@@ -9,33 +9,45 @@ const Ranking = () => {
   const navigate = useNavigate();
   const [ranking, setRanking] = useState([]);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRanking = async () => {
+      setIsLoading(true);
+      setError('');
       try {
-        const response = await axios.get(`${apiEndpoint}/ranking`, {});
+        const response = await axios.get(`${apiEndpoint}/ranking`);
 
         if (response.data && Array.isArray(response.data)) {
           setRanking(response.data);
         } else {
-          setError('Invalid data format');
+          console.error('Invalid data format received:', response.data);
+          setError('Invalid data format received from server.');
         }
       } catch (error) {
-        setError('Failed to fetch ranking data');
+        console.error('Failed to fetch ranking data:', error);
+        setError('Failed to fetch ranking data. ' + (error.response?.data?.message || error.message));
+      } finally {
+        setIsLoading(false);
       }
     };
-  
+
     fetchRanking();
   }, []);
 
   const handleBackClick = () => {
     navigate('/menu');
   };
-    
+
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = '/profile/profile_1.gif'; // Fallback to default or first image
+  };
+
   return (
     <Container component="main" maxWidth="md" sx={{ marginTop: 4 }}>
-      <Button 
-        variant="contained" 
+      <Button
+        variant="contained"
         onClick={handleBackClick}
         sx={{ marginBottom: 2 }}
       >
@@ -44,31 +56,46 @@ const Ranking = () => {
       <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
         Ranking
       </Typography>
+
+      {isLoading && <Typography>Loading ranking...</Typography>}
+
       {error && (
         <Typography component="p" variant="body1" sx={{ color: 'red', marginBottom: 2 }}>
           {error}
         </Typography>
       )}
-      <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Position</TableCell>
-              <TableCell>Username</TableCell>
-              <TableCell>Score</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {ranking.map((user, index) => (
-              <TableRow key={user._id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{user._id}</TableCell>
-                <TableCell>{user.score}</TableCell>
+
+      {!isLoading && !error && (
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ width: '10%' }}>Position</TableCell>
+                <TableCell sx={{ width: '10%' }}>Avatar</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell align="right">Score</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {ranking.map((user, index) => (
+                <TableRow key={user.username}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <Avatar
+                      src={`/profile/${user.profileImage || 'profile_1.gif'}`}
+                      alt={user.username}
+                      onError={handleImageError}
+                      sx={{ width: 40, height: 40 }}
+                    />
+                  </TableCell>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell align="right">{user.score}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      )}
     </Container>
   );
 };

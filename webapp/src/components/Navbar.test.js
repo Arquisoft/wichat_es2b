@@ -2,65 +2,71 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Navbar from './Navbar';
 import { BrowserRouter as Router } from 'react-router-dom';
+import '@testing-library/jest-dom';
 
 describe('Navbar Component', () => {
-  test('renders Navbar with links and buttons', () => {
+  const mockToggleDarkTheme = jest.fn();
+  const mockToggleLightTheme = jest.fn();
+
+  beforeEach(() => {
+    mockToggleDarkTheme.mockClear();
+    mockToggleLightTheme.mockClear();
+  });
+
+  test('renders Navbar with all links and buttons', () => {
     render(
       <Router>
-        <Navbar />
+        <Navbar toggleDarkTheme={mockToggleDarkTheme} toggleLightTheme={mockToggleLightTheme} />
       </Router>
     );
 
-    expect(screen.getByText('Menu')).toBeInTheDocument();
-    expect(screen.getByText('Game')).toBeInTheDocument();
-    expect(screen.getByText('Statistics')).toBeInTheDocument();
-    expect(screen.getByText('Ranking')).toBeInTheDocument();
-    expect(screen.getByText('Logout')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Menu/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Game/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Statistics/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Ranking/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Profile/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Logout/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '☀️' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '🌙' })).toBeInTheDocument();
   });
 
   test('triggers light theme toggle on button click', () => {
-    const toggleLightTheme = jest.fn();
-
     render(
       <Router>
-        <Navbar toggleLightTheme={toggleLightTheme} />
+        <Navbar toggleLightTheme={mockToggleLightTheme} toggleDarkTheme={mockToggleDarkTheme} />
       </Router>
     );
 
-    fireEvent.click(screen.getByText('☀️'));
-    expect(toggleLightTheme).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '☀️' }));
+    expect(mockToggleLightTheme).toHaveBeenCalledTimes(1);
+    expect(mockToggleDarkTheme).not.toHaveBeenCalled();
   });
 
   test('triggers dark theme toggle on button click', () => {
-    const toggleDarkTheme = jest.fn();
-
-    render(
+     render(
       <Router>
-        <Navbar toggleDarkTheme={toggleDarkTheme} />
+        <Navbar toggleLightTheme={mockToggleLightTheme} toggleDarkTheme={mockToggleDarkTheme} />
       </Router>
     );
 
-    fireEvent.click(screen.getByText('🌙'));
-    expect(toggleDarkTheme).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '🌙' }));
+    expect(mockToggleDarkTheme).toHaveBeenCalledTimes(1);
+    expect(mockToggleLightTheme).not.toHaveBeenCalled();
   });
 
-  test('navigates to the correct link', () => {
+  test('navigates to the correct links on click', () => {
     render(
       <Router>
-        <Navbar />
+        <Navbar toggleDarkTheme={mockToggleDarkTheme} toggleLightTheme={mockToggleLightTheme} />
       </Router>
     );
 
-    fireEvent.click(screen.getByText('Menu'));
-    expect(window.location.pathname).toBe('/menu');
+    expect(screen.getByRole('link', { name: /Menu/i })).toHaveAttribute('href', '/menu');
+    expect(screen.getByRole('link', { name: /Game/i })).toHaveAttribute('href', '/game');
+    expect(screen.getByRole('link', { name: /Statistics/i })).toHaveAttribute('href', '/stadistics');
+    expect(screen.getByRole('link', { name: /Ranking/i })).toHaveAttribute('href', '/ranking');
+    expect(screen.getByRole('link', { name: /Profile/i })).toHaveAttribute('href', '/profile');
+    expect(screen.getByRole('link', { name: /Logout/i })).toHaveAttribute('href', '/login');
 
-    fireEvent.click(screen.getByText('Game'));
-    expect(window.location.pathname).toBe('/game');
-
-    fireEvent.click(screen.getByText('Statistics'));
-    expect(window.location.pathname).toBe('/stadistics');
-
-    fireEvent.click(screen.getByText('Ranking'));
-    expect(window.location.pathname).toBe('/ranking');
   });
 });

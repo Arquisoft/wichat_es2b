@@ -1,8 +1,7 @@
-// src/components/Navbar.js
 import React from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Home, SportsEsports, BarChart, Leaderboard, ExitToApp } from '@mui/icons-material';
+import { Home, SportsEsports, BarChart, Leaderboard, ExitToApp, AccountCircle } from '@mui/icons-material';
 
 const Navbar = ({ toggleDarkTheme, toggleLightTheme }) => {
   return (
@@ -20,6 +19,9 @@ const Navbar = ({ toggleDarkTheme, toggleLightTheme }) => {
           </Button>
           <Button color="inherit" component={Link} to="/ranking" startIcon={<Leaderboard />}>
             Ranking
+          </Button>
+          <Button color="inherit" component={Link} to="/profile" startIcon={<AccountCircle />}>
+            Profile
           </Button>
         </Box>
 

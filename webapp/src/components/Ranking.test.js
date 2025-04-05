@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import Ranking from './Ranking';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
+import '@testing-library/jest-dom';
 
 const mockedUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -11,73 +12,95 @@ jest.mock('react-router-dom', () => ({
 }));
 jest.mock('axios');
 
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8001';
+
 describe('Ranking Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    mockedUsedNavigate.mockReset();
+    axios.get.mockClear();
+    mockedUsedNavigate.mockClear();
   });
 
-  it('renders error message on fetch failure', async () => {
-    axios.get.mockRejectedValueOnce({
-      response: {
-        status: 500,
-        data: 'Internal Server Error'
-      }
-    });
+  test('renders loading state initially', () => {
+    axios.get.mockResolvedValue({ data: [] });
     render(
-      <BrowserRouter>
+      <Router>
         <Ranking />
-      </BrowserRouter>
+      </Router>
     );
-    await waitFor(() => expect(screen.getByText('Failed to fetch ranking data')).toBeInTheDocument());
+    expect(screen.getByText(/Loading ranking.../i)).toBeInTheDocument();
   });
 
-  it('renders ranking data', async () => {
+  test('renders error message on fetch failure', async () => {
+    const errorMessage = 'Network Error';
+    axios.get.mockRejectedValueOnce({ message: errorMessage });
+    render(
+      <Router>
+        <Ranking />
+      </Router>
+    );
+    await waitFor(() => expect(screen.getByText(new RegExp(`Failed to fetch ranking data. ${errorMessage}`, 'i'))).toBeInTheDocument());
+    expect(screen.queryByText(/Loading ranking.../i)).not.toBeInTheDocument();
+  });
+
+  test('renders ranking data correctly', async () => {
     const rankingData = [
-      { index: 1, _id: 'user1', score: 10 },
-      { index: 2, _id: 'user2', score: 8 }
+      { username: 'user1', score: 10, profileImage: 'profile_5.gif' },
+      { username: 'user2', score: 8, profileImage: 'profile_default.png' },
+      { username: 'user3', score: 5 }, // User without profile image
     ];
     axios.get.mockResolvedValueOnce({ data: rankingData });
     render(
-      <BrowserRouter>
+      <Router>
         <Ranking />
-      </BrowserRouter>
+      </Router>
     );
-    await waitFor(() => {
-      expect(screen.getByText('Ranking')).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText(/Loading ranking.../i)).not.toBeInTheDocument());
 
-      expect(screen.getByText('Position')).toBeInTheDocument();
-      expect(screen.getByText('Username')).toBeInTheDocument();
-      expect(screen.getByText('Score')).toBeInTheDocument();
+    expect(screen.getByText('Ranking')).toBeInTheDocument();
+    expect(screen.getByText('Position')).toBeInTheDocument();
+    expect(screen.getByText('Avatar')).toBeInTheDocument();
+    expect(screen.getByText('Username')).toBeInTheDocument();
+    expect(screen.getByText('Score')).toBeInTheDocument();
 
-      expect(screen.getByText('1')).toBeInTheDocument();
-      expect(screen.getByText('user1')).toBeInTheDocument();
-      expect(screen.getByText('10')).toBeInTheDocument();
+    // User 1
+    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(screen.getByText('user1')).toBeInTheDocument();
+    expect(screen.getByText('10')).toBeInTheDocument();
+    expect(screen.getByAltText('user1')).toHaveAttribute('src', '/profile/profile_5.gif');
 
-      expect(screen.getByText('2')).toBeInTheDocument();
-      expect(screen.getByText('user2')).toBeInTheDocument();
-      expect(screen.getByText('8')).toBeInTheDocument();
-    });
+    // User 2
+    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByText('user2')).toBeInTheDocument();
+    expect(screen.getByText('8')).toBeInTheDocument();
+    expect(screen.getByAltText('user2')).toHaveAttribute('src', '/profile/profile_default.png');
+
+     // User 3 (fallback image)
+    expect(screen.getByText('3')).toBeInTheDocument();
+    expect(screen.getByText('user3')).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getByAltText('user3')).toHaveAttribute('src', '/profile/profile_1.gif'); // Default fallback image check
   });
 
-  it('renders error message on invalid data format', async () => {
-    axios.get.mockResolvedValueOnce({ data: 42 });
+  test('renders error message on invalid data format from server', async () => {
+    // Simulate server returning non-array data
+    axios.get.mockResolvedValueOnce({ data: { error: 'invalid format' } });
     render(
-      <BrowserRouter>
+      <Router>
         <Ranking />
-      </BrowserRouter>
+      </Router>
     );
-    await waitFor(() => expect(screen.getByText('Invalid data format')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Invalid data format received from server./i)).toBeInTheDocument());
+     expect(screen.queryByText(/Loading ranking.../i)).not.toBeInTheDocument();
   });
 
-  it('calls navigate on Back to Menu click', async () => {
+  test('calls navigate on Back to Menu click', async () => {
     axios.get.mockResolvedValueOnce({ data: [] });
     render(
-      <BrowserRouter>
+      <Router>
         <Ranking />
-      </BrowserRouter>
+      </Router>
     );
-    await waitFor(() => expect(axios.get).toHaveBeenCalled());
+    await waitFor(() => expect(screen.queryByText(/Loading ranking.../i)).not.toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /back to menu/i }));
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/menu');
   });

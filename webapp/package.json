@@ -9,6 +9,7 @@
     "@mui/material": "^5.15.3",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.7.9",
+    "gatling": "^2.0.0",
     "mongoose": "^8.12.1",
     "mongose": "^0.0.2-security",
     "moongose": "^1.0.0",

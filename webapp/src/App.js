@@ -11,6 +11,7 @@ import Stadistics from './components/Stadistics';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Ranking from './components/Ranking';
 import Navbar from './components/Navbar';
+import Profile from './components/Profile';
 
 const darkTheme = createTheme({
   palette: {
@@ -58,6 +59,9 @@ const App = () => {
           } />
           <Route path="/ranking" element={
             <ProtectedRoute element={<Ranking />} />
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute element={<Profile />} />
           } />
         </Routes>
       </main>
