@@ -3,10 +3,6 @@
   [![Actions Status](https://github.com/arquisoft/wichat_es2b/workflows/CI%20for%20wichat_es2b/badge.svg)](https://github.com/arquisoft/wichat_es2b/actions)
   [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wichat_es2b&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wichat_es2b)
   [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wichat_es2b&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wichat_es2b)
-
-  <a href="https://github.com/Arquisoft/wichat_es2b">
-    <img src="https://hits.link/hits?url=https://github.com/Arquisoft/wichat_es2b&label=Visitas&color=00afff" alt="Visitas al repositorio">
-  </a>
   
   ![Logo](/docs/images/Logotipo_Wechat_mini.png)
 
