@@ -56,27 +56,17 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
-app.post('/askllm', async (req, res) => {
-  try {
-    // Forward the add user request to the user service
-    const llmResponse = await axios.post(llmServiceUrl+'/ask', req.body);
-    res.json(llmResponse.data);
-  } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
-  }
-});
-
 app.post('/hintllm', async (req, res) => {
-  console.log("🔍 Solicitud recibida en /hintllm:", req.body);
+  //console.log("🔍 Solicitud recibida en /hintllm:", req.body);
   
   try {
-    console.log("➡️ Reenviando solicitud a:", `${llmServiceUrl}/hint`);
+    //console.log("➡️ Reenviando solicitud a:", `${llmServiceUrl}/hint`);
     
     const llmResponse = await axios.post(`${llmServiceUrl}/hint`, req.body, {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    console.log("✅ Respuesta del LLM recibida:", llmResponse.data);
+    //console.log("✅ Respuesta del LLM recibida:", llmResponse.data);
     res.json(llmResponse.data);
   } catch (error) {
     console.error("❌ Error en la solicitud al LLM:", error.message);

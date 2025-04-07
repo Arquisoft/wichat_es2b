@@ -11,7 +11,8 @@ const BaseQuestionPresentation = ({
     buttonsDisabled, 
     navigate, 
     onAnswerClick, 
-    getButtonClassName 
+    getButtonClassName,
+    chatComponent
 }) => {
     if (score.rounds >= maxRounds) {
         const total = score.correct + score.incorrect;
@@ -59,6 +60,7 @@ const BaseQuestionPresentation = ({
                         ))}
                     </div>
                     {feedback && <p>{feedback}</p>}
+                    {chatComponent}
                 </>
             ) : (
                 <p className="loading-question">Loading Question...</p>

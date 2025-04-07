@@ -1,10 +1,11 @@
 class QuestionGeneration {
-    constructor(setQuestion) {
+    constructor(setQuestion, showChat) {
         this.setQuestion = setQuestion;
         this.questionsCache = [];
         this.currentIndex = 0;
         this.isFetching = false;
         this.currentCity = null; // Guardará la ciudad actual
+        this.showChat = showChat; // Guardara la referencia para mostrar el chat 
     }
 
     async fetchQuestions() {
@@ -84,6 +85,7 @@ class QuestionGeneration {
         const correctCity = options[randomIndex];
 
         this.currentCity = correctCity.city;
+        this.showChat(); // Mostrar el chat al usuario
 
         return {
             answers: options.reduce((acc, item) => {

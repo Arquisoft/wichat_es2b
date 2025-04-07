@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useStats from '../utils/QuestionUtils';
 import BaseQuestionPresentation from './BaseQuestionPresentation';
 
-const QuestionPresentation = ({ game, navigate, question }) => {
+const QuestionPresentation = ({ game, navigate, question, chatComponent}) => {
     const { score, setScore, feedback, setFeedback, buttonsDisabled, setButtonsDisabled } = useStats(10);
     const maxRounds = 10;
 
@@ -44,6 +44,7 @@ const QuestionPresentation = ({ game, navigate, question }) => {
             navigate={navigate}
             onAnswerClick={checkAnswer}
             getButtonClassName={getButtonClassName}
+            chatComponent={chatComponent}
         />
     );
 };

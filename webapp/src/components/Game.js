@@ -3,11 +3,11 @@ import { Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import QuestionPresentation from './wikidataComponents/QuestionPresentation.jsx';
 import useGameLogic from './utils/GameUtils';
-import ChatLLM from './ChatLLM';
 
 const Game = () => {
   const navigate = useNavigate();
-  const { currentQuestion, questionGenerator, currentCity } = useGameLogic();
+
+  const { currentQuestion, questionGenerator, currentCity, chatComponent } = useGameLogic();
 
   return (
     <Container component="main" maxWidth="md" sx={{ marginTop: 4 }}>
@@ -15,14 +15,9 @@ const Game = () => {
         game={questionGenerator}
         navigate={navigate}
         question={currentQuestion}
+        chatComponent={chatComponent}
         data-testid="question-presentation"
       />
-
-      <ChatLLM 
-        currentCity={currentCity} 
-        data-testid="chat-llm"
-      />
-
     </Container>
   );
 };

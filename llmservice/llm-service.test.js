@@ -18,10 +18,10 @@ describe('LLM Service', () => {
     }
   });
 
-  // Test /ask endpoint
+  // Test /hint endpoint
   it('the llm should reply', async () => {
     const response = await request(app)
-      .post('/ask')
+      .post('/hint')
       .send({ question: 'a question', apiKey: 'apiKey', model: 'gemini' });
 
     expect(response.statusCode).toBe(200);
