@@ -34,7 +34,6 @@ const TimedGame = () => {
                 question={currentQuestion}
                 data-testid="timed-question-presentation"
             />
-            <TimedProgress data-testid="timed-progress" />
             <ChatLLM currentCity={currentCity} data-testid="chat-llm" />
         </Container>
     );

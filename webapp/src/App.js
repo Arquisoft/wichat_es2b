@@ -36,10 +36,14 @@ const App = () => {
     setTheme(lightTheme);
   };
 
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === lightTheme ? darkTheme : lightTheme);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar toggleDarkTheme={toggleDarkTheme} toggleLightTheme={toggleLightTheme} />
+      <Navbar toggleTheme={toggleTheme}/>
       <main>
         <Routes>
           <Route path="/" element={<Login />} />
