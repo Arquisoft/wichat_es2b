@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const User = require('./user-model');
 const GameStats = require('./game-stats-model');
+require('dotenv').config({ path: '../../.env' }); // Ruta relativa desde la carpeta userservice
 
 const app = express();
 const port = process.env.PORT || 8001;
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
+console.log(`mongoUri: ${mongoUri}`);
 mongoose.connect(mongoUri)
   .then(async () => {
     console.log('Conectado a MongoDB');
