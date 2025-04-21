@@ -5,12 +5,18 @@ const jwt = require('jsonwebtoken');
 const User = require('./auth-model')
 const { check, matchedData, validationResult } = require('express-validator');
 const app = express();
-const port = 8002; 
+const port = 8002;
+require('dotenv').config({ path: '../../.env' }); // Ruta relativa desde la carpeta authservice
 
 app.use(express.json());
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
-mongoose.connect(mongoUri);
+console.log(`mongoUri: ${mongoUri}`);
+mongoose.connect(mongoUri)
+  .then(async () => {
+    console.log('Conectado a MongoDB');
+  })
+  .catch(err => console.error('Error de conexión a MongoDB:', err.message));
 
 function validateRequiredFields(req, requiredFields) {
     for (const field of requiredFields) {
