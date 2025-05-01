@@ -481,8 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a>
 <ul class="sectlevel2">
-<li><a href="#_infrastructure_level_1">7.1. Infrastructure Level 1</a></li>
-<li><a href="#_infrastructure_level_2">7.2. Infrastructure Level 2</a></li>
+<li><a href="#_infrastructure">7.1. Infrastructure</a></li>
 </ul>
 </li>
 <li><a href="#section-concepts">8. Cross-cutting Concepts</a>
@@ -498,7 +497,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-design-decisions">9. Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_main_framework">9.1. Main Framework</a></li>
+<li><a href="#_main_ide">9.1. Main IDE</a></li>
 <li><a href="#_front_end">9.2. Front-End</a></li>
 <li><a href="#_back_end">9.3. Back-End</a></li>
 <li><a href="#_llm">9.4. LLM</a></li>
@@ -926,15 +925,6 @@ These stakeholders determine the extent and the level of detail of your work and
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p><strong>Wireframes</strong></p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="./images/wireframe-XXX.png" alt="wireframe XXX">
-</div>
-<div class="title">Figure 1. XXX Wireframe</div>
-</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1247,13 +1237,19 @@ together with a mapping table showing the relationships between channels and inp
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Visual Studio Code</strong> as a framework due to its versatility in developing applications with different programming languages and its compatibility with Git.</p>
+<p><strong>Visual Studio Code</strong> as a IDE due to its versatility in developing applications with different programming languages and its compatibility with Git.</p>
 </li>
 <li>
-<p><strong>Docker</strong> for deploying the project.</p>
+<p><strong>Docker</strong> to deploy the project, as it allows for the definition of consistent execution environments, ensuring that the application runs the same way in development, testing, and production. Additionally, it supports continuous deployment.</p>
 </li>
 <li>
 <p><strong>GitHub Pages</strong> for deploying the documentation.</p>
+</li>
+<li>
+<p><strong>MongoDB</strong> as a database due to its flexibility when implementing new properties in schemas without having to redo the "tables" every time a new property is added.</p>
+</li>
+<li>
+<p><strong>Azure portal</strong> to deploy the application on the internet due to its ease of configuration, following the instructions provided to developers for deployment, and its potential to install Docker for deploying the Docker containers created in continuous deployment.</p>
 </li>
 </ul>
 </div>
@@ -1646,87 +1642,49 @@ when your infrastructure is more complex.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_infrastructure_level_1">7.1. Infrastructure Level 1</h3>
-<div class="sidebarblock arc42help">
+<h3 id="_infrastructure">7.1. Infrastructure</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Element</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>User service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Utilized by logged-in users, retrieves their data from the MongoDB database and displays it within the web application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Auth service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure user authentication during their initial registration in the game. Collect and securely store all their information in the MongoDB database to facilitate seamless login experiences in subsequent sessions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Gateway service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a central entry point for client requests, routing them to appropriate backend microservices.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WebApp</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface for display to the user where the application is housed. Utilizes React as it main form of code and Javascript to interact with the Wikidata external service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>LLMService</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages the Language Module and the AI made for the hint system of the application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MongoDB</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The database management system, serves as the backend storage for the application&#8217;s functionality. It stores user data, generated questions and other game-related information.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock">
 <div class="content">
-<div class="paragraph">
-<p>Describe (usually in a combination of diagrams, tables, and text):</p>
+<img src="./images/InfraestructuraASW.png" alt="InfraestructuraASW">
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them</p>
-</li>
-<li>
-<p>important justifications or motivations for this deployment structure</p>
-</li>
-<li>
-<p>quality and/or performance features of this infrastructure</p>
-</li>
-<li>
-<p>mapping of software artifacts to elements of this infrastructure</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Motivation</dt>
-<dd>
-<p><em>&lt;explanation in text form&gt;</em></p>
-</dd>
-<dt class="hdlist1">Quality and/or Performance Features</dt>
-<dd>
-<p><em>&lt;explanation in text form&gt;</em></p>
-</dd>
-<dt class="hdlist1">Mapping of Building Blocks to Infrastructure</dt>
-<dd>
-<p><em>&lt;description of the mapping&gt;</em></p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_infrastructure_level_2">7.2. Infrastructure Level 2</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you can include the internal structure of (some) infrastructure elements from level 1.</p>
-</div>
-<div class="paragraph">
-<p>Please copy the structure from level 1 for each selected element.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_infrastructure_element_1">7.2.1. <em>&lt;Infrastructure Element 1&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_infrastructure_element_2">7.2.2. <em>&lt;Infrastructure Element 2&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_infrastructure_element_n">7.2.3. <em>&lt;Infrastructure Element n&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
 </div>
 <div style="page-break-after: always;"></div>
-</div>
 </div>
 </div>
 </div>
@@ -2024,7 +1982,7 @@ on this list.</p>
 <p>These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:</p>
 </div>
 <div class="sect2">
-<h3 id="_main_framework">9.1. Main Framework</h3>
+<h3 id="_main_ide">9.1. Main IDE</h3>
 <div class="paragraph">
 <p>7/02/2024</p>
 </div>
@@ -2032,7 +1990,7 @@ on this list.</p>
 <p><strong>Description:</strong> The main programming language for the application&#8217;s development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.</p>
 </div>
 <div class="paragraph">
-<p><strong>Decision taken:</strong> Due to the need for the framework to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code framework.</p>
+<p><strong>Decision taken:</strong> Due to the need for the IDE to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code IDE.</p>
 </div>
 </div>
 <div class="sect2">
