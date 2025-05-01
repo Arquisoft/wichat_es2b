@@ -1,10 +1,12 @@
+import { error } from "jquery";
+
 class QuestionGeneration {
     constructor(setQuestion) {
         this.setQuestion = setQuestion;
         this.questionsCache = [];
         this.currentIndex = 0;
         this.isFetching = false;
-        this.currentCity = null; // Guardará la ciudad actual
+        this.currentCity = null;
     }
 
     async fetchQuestions() {
@@ -21,11 +23,13 @@ class QuestionGeneration {
                 const question = this.getNextQuestion();
                 if (question) {
                     this.setQuestion(question);
-                    this.currentCity = question.correct; // Guardamos la ciudad seleccionada
+                } else {
+                     await this.fetchQuestions();
                 }
             }
         } catch (error) {
             console.error("Error fetching questions:", error);
+             this.setQuestion(null);
         } finally {
             this.isFetching = false;
         }
@@ -38,61 +42,61 @@ class QuestionGeneration {
             ?city wdt:P31 wd:Q515.
             ?city wdt:P18 ?image.
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-            FILTER(CONTAINS(STR(?image), "http"))
+            FILTER(STRSTARTS(STR(?image), "http"))
         }
         ORDER BY RAND()
         LIMIT 40`;
 
         try {
-            const response = await fetch(`${WikidataUrl}?query=${encodeURIComponent(sparqlQuery)}&format=json`, {
+            const response = await fetch(`${WikidataUrl}?query=${encodeURIComponent(sparqlQuery)}`, {
                 headers: { 'Accept': 'application/sparql-results+json' }
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             const data = await response.json();
-            
+
             return data.results.bindings
-                .filter(item => item.image?.value)
+                .filter(item => item.cityLabel?.value && item.image?.value)
                 .map(item => ({
                     city: item.cityLabel.value,
                     image: item.image.value
                 }));
         } catch (error) {
-            console.error("API Error:", error);
+            console.error("Wikidata API Error:", error);
             return [];
         }
     }
 
     getSecureRandom(max) {
-        // Create a new array with 1 element
         const array = new Uint32Array(1);
-        // Get cryptographically secure random values
         window.crypto.getRandomValues(array);
-        // Convert to number between 0 and max-1
-        return Math.floor((array[0] / (0xffffffff + 1)) * max);
+        return array[0] % max;
     }
 
+
     getNextQuestion() {
-        if (!this.questionsCache.length || this.currentIndex + 4 > this.questionsCache.length) {
-            this.questionsCache = [];
-            return null;
+        if (this.currentIndex + 4 > this.questionsCache.length) {
+             this.questionsCache = [];
+             this.currentIndex = 0;
+             return null;
         }
 
         const options = this.questionsCache.slice(this.currentIndex, this.currentIndex + 4);
         this.currentIndex += 4;
-        
-        // Use cryptographically secure random number generator
-        const randomIndex = this.getSecureRandom(options.length);
-        const correctCity = options[randomIndex];
 
-        this.currentCity = correctCity.city;
+        const randomIndex = this.getSecureRandom(options.length);
+        const correctCityData = options[randomIndex];
+        this.currentCity = correctCityData.city;
 
         return {
-            answers: options.reduce((acc, item) => {
-                acc[item.city] = item.image;
-                return acc;
-            }, {}),
-            correct: correctCity.city
+            answers: Object.fromEntries(options.map(item => [item.city, item.image])),
+            correct: correctCityData.city
         };
     }
+
 
     getCurrentCity() {
         return this.currentCity;
