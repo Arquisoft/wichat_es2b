@@ -1,29 +1,17 @@
 import axios from "axios";
 
-
 let cityCache = []; // Lista de ciudades cargadas desde Wikidata
+let isCachePopulated = false;
 
-function getRandom(max) {
-  let num = (Date.now() +'');
-  num = parseInt(num.at(num.length-1));
+const WIKIDATA_ENDPOINT = "https://query.wikidata.org/sparql";
+const CACHE_SIZE = 1000;
 
-  while(num > max){
-    num -= max
-  }
-
-  return num/10;
-}
-
-
-export async function fetchRandomCity() {
-  // Si ya hay ciudades en caché, elige una al azar
-  if (cityCache.length > 0) {
-    const randomIndex = Math.floor(getRandom(10) * cityCache.length);
-    return cityCache[randomIndex];
+async function populateCityCache() {
+  if (isCachePopulated) {
+    return;
   }
 
   // Consulta inicial a Wikidata
-  const endpoint = "https://query.wikidata.org/sparql";
   const query = `
     SELECT ?city ?cityLabel ?lat ?lon WHERE {
       ?city wdt:P31/wdt:P279* wd:Q515.
@@ -33,11 +21,10 @@ export async function fetchRandomCity() {
       ?value wikibase:geoLongitude ?lon.
       SERVICE wikibase:label { bd:serviceParam wikibase:language "es,en". }
     }
-    ORDER BY RAND()
-    LIMIT 100
+    LIMIT ${CACHE_SIZE}
   `;
 
-  const url = `${endpoint}?query=${encodeURIComponent(query)}`;
+  const url = `${WIKIDATA_ENDPOINT}?query=${encodeURIComponent(query)}`;
   const headers = { Accept: "application/sparql-results+json" };
 
   try {
@@ -45,35 +32,55 @@ export async function fetchRandomCity() {
     const results = res.data.results.bindings;
 
     // Filtrar y transformar resultados válidos
-    cityCache = results
-        .filter((r) => {
-          const label = r.cityLabel?.value || "";
-          return label && !/^Q\d+$/.test(label); // Descarta códigos como "Q1234"
-        })
-        .map((r) => ({
-          name: r.cityLabel.value,
-          lat: parseFloat(r.lat.value),
-          lng: parseFloat(r.lon.value),
-        }));
+    const fetchedCities = results
+      .filter((r) => {
+        const label = r.cityLabel?.value || "";
+        return label && !/^Q\d+$/.test(label); // Descarta códigos como "Q1234"
+      })
+      .map((r) => ({
+        name: r.cityLabel.value,
+        lat: parseFloat(r.lat.value),
+        lng: parseFloat(r.lon.value),
+      }));
 
-    if (cityCache.length === 0) {
-      throw new Error("No se encontraron nombres válidos.");
+    cityCache = fetchedCities;
+    isCachePopulated = true;
+
+    if (fetchedCities.length === 0) {
+      // Handle case where no valid cities are found if needed
     }
 
-    // Elegir ciudad aleatoria de la caché
-    const randomIndex = Math.floor(getRandom(10) * cityCache.length);
-    return cityCache[randomIndex];
   } catch (error) {
-    console.error("Error al consultar Wikidata:", error);
+    isCachePopulated = false;
     throw error;
   }
+}
+
+export async function fetchRandomCity() {
+  if (!isCachePopulated) {
+    try {
+      await populateCityCache();
+    } catch (error) {
+      throw new Error(`Could not populate city cache: ${error.message}`);
+    }
+  }
+
+  if (cityCache.length === 0) {
+      throw new Error("City cache is empty after population attempt.");
+  }
+
+  // Elegir ciudad aleatoria de la caché
+  const randomIndex = Math.floor(Math.random() * cityCache.length);
+  return cityCache[randomIndex];
 }
 
 // Solo para testing
 export function __setCityCacheForTest(mockedCities) {
   cityCache = mockedCities;
+  isCachePopulated = cityCache.length > 0;
 }
 
-
-
-
+export function clearCityCache() {
+    cityCache = [];
+    isCachePopulated = false;
+}
