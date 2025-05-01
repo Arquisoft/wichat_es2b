@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Menu from './components/Menu';
 import Game from './components/Game';
 import TimedGame from './components/TimedGame';
+import LocationGame from './components/LocationGame';
 import Stadistics from './components/Stadistics';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Ranking from './components/Ranking';
@@ -55,6 +56,9 @@ const AppContent = () => {
           } />
           <Route path="/timedGame" element={
             <ProtectedRoute element={<TimedGame />} />
+          } />
+          <Route path="/locationGame" element={
+            <ProtectedRoute element={<LocationGame />} />
           } />
           <Route path="/stadistics" element={
             <ProtectedRoute element={<Stadistics />} />

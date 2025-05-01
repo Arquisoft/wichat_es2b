@@ -50,12 +50,12 @@ jobs:
     needs: [e2e-tests]
     steps:
     - uses: actions/checkout@v4
-    - name: Set up .env file
-      run: echo "REACT_APP_LLM_API_KEY=${{ secrets.REACT_APP_LLM_API_KEY }}" > webapp/.env
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
+        BASE_URI: http://${{ secrets.DEPLOY_HOST }}:3000
         API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
+        USER_SERVICE_URI: http://${{ secrets.DEPLOY_HOST }}:8001
         LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
       with:
           name: arquisoft/wichat_es2b/webapp
@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI,LLM_API_KEY
+          buildargs: API_URI,LLM_API_KEY,USER_SERVICE_URI,BASE_URI
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -96,12 +96,15 @@ jobs:
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
+      env:
+        BASE_URI: http://${{ secrets.DEPLOY_HOST }}:3000
       with:
         name: arquisoft/wichat_es2b/userservice
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: users/userservice
+        buildargs: BASE_URI
 
   docker-push-llmservice:
     name: Push llm service Docker Image to GitHub Packages

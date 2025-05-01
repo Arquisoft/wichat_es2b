@@ -7,13 +7,13 @@ During the application development process, a series of decisions may change due
 
 These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:
 
-=== Main Framework
+=== Main IDE
 
 7/02/2024
 
 **Description:** The main programming language for the application's development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.
 
-**Decision taken:** Due to the need for the framework to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code framework.
+**Decision taken:** Due to the need for the IDE to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code IDE.
 
 
 === Front-End

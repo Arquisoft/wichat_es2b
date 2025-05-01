@@ -6,11 +6,15 @@ ifndef::imagesdir[:imagesdir: ../images]
 What follows is a short summary and explanation of the fundamental decisions and solution strategies, that shape our system's architecture
 
 === Technology
-* **Visual Studio Code** as a framework due to its versatility in developing applications with different programming languages and its compatibility with Git.
+* **Visual Studio Code** as a IDE due to its versatility in developing applications with different programming languages and its compatibility with Git.
 
-* **Docker** for deploying the project.
+* **Docker** to deploy the project, as it allows for the definition of consistent execution environments, ensuring that the application runs the same way in development, testing, and production. Additionally, it supports continuous deployment.
 
 * **GitHub Pages** for deploying the documentation.
+
+* **MongoDB** as a database due to its flexibility when implementing new properties in schemas without having to redo the "tables" every time a new property is added.
+
+* **Azure portal** to deploy the application on the internet due to its ease of configuration, following the instructions provided to developers for deployment, and its potential to install Docker for deploying the Docker containers created in continuous deployment.
 
 === High-level decomposition
 |===

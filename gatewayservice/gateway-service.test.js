@@ -110,6 +110,41 @@ describe('Gateway Service', () => {
     expect(response.body.message).toBe('Wrong URL: Please, check the correct enpoint URL');
   });
 
+  it('should accept valid frontend metric', async () => {
+    const response = await request(app)
+        .post('/frontend-metrics')
+        .send({ name: 'CLS', value: 0.15 })
+        .expect(200);
+
+    expect(response.body.status).toBe('Metric updated');
+  });
+
+  it('should reject unknown metric name', async () => {
+    const response = await request(app)
+        .post('/frontend-metrics')
+        .send({ name: 'UNKNOWN', value: 0.5 })
+        .expect(400);
+
+    expect(response.body.status).toBe('Unknown metric name');
+  });
+
+  it('should reject invalid frontend metric format', async () => {
+    const response = await request(app)
+        .post('/frontend-metrics')
+        .send({ invalid: 'data' })
+        .expect(400);
+
+    expect(response.body.status).toBe('Invalid metric format');
+  });
+
+  it('should return Prometheus metrics', async () => {
+    const response = await request(app)
+        .get('/metrics')
+        .expect('Content-Type', /text\/plain/)
+        .expect(200);
+
+    expect(response.text).toContain('web_vitals_cls'); // alguna métrica que definas
+  });
 
 
 });

@@ -48,6 +48,7 @@ services:
     networks:
       - mynetwork
 
+  
   gatewayservice:
     container_name: gatewayservice-wichat_es2b
     image: ghcr.io/arquisoft/wichat_es2b/gatewayservice:latest
@@ -66,6 +67,7 @@ services:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
       LLM_SERVICE_URL: http://llmservice:8003
+      GAME_SERVICE_URL: http://gameservice:8004
 
   webapp:
     container_name: webapp-wichat_es2b

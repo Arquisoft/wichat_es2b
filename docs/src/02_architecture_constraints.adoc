@@ -30,8 +30,3 @@ The application must be developed according to some constraints that were define
 | Language | It was agreed beforehand that english would be the language chosen for the proyect
 | Github | As the platform we work on we are obligated to learn Githubs conventions
 |===
-
-*Wireframes*
-
-image::wireframe-XXX.png[align="center", title="XXX Wireframe"]
-

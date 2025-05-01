@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
+ARG BASE_URI=""
+ENV CORS_ORIGIN=$BASE_URI
+
 # Copy the app source code to the working directory
 COPY . .
 

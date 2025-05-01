@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useHandNavigation } from './HandNavigationContext';
 
-const apiEndpoint = process.env.USER_SERVICE_URL || 'http://localhost:8001';
+const apiEndpoint = process.env.REACT_APP_USER_SERVICE_ENDPOINT || 'http://localhost:8001';
 const TOTAL_IMAGES = 8;
 
 const Profile = () => {

@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 
+const apiEndpoint = process.env.REACT_APP_USER_SERVICE_ENDPOINT || 'http://localhost:8001';
+
 const useStats = (maxRounds = 10) => {
     const [score, setScore] = useState({ correct: 0, incorrect: 0, rounds: 0 });
     const [feedback, setFeedback] = useState(null);
     const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
+
     useEffect(() => {
         const saveStats = async () => {
             try {
-                const response = await fetch('http://localhost:8001/api/stats', {
+                const response = await fetch(`${apiEndpoint}/api/stats`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

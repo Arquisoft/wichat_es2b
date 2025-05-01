@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Snackbar, Link } from '@mui/material';
 
-const apiEndpoint = process.env.GATEWAY_SERVICE_URL || 'http://localhost:8000';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 const Register = () => {
   const [username, setUsername] = useState('');
