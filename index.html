@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<title>wichat_es2b</title>
+<title>Wichat</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,12 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1><span class="image"><img src="./images/arc42-logo.png" alt="arc42"></span> wichat_es2b</h1>
-<div class="details">
-<span id="revnumber">version 8.2 EN,</span>
-<span id="revdate">January 2023</span>
-<br><span id="revremark">(based upon AsciiDoc version)</span>
-</div>
+<h1><span class="image"><img src="./images/Logotipo_Wechat_mini.png" alt="Logotipo Wechat mini"></span> <strong>Wichat</strong></h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -474,9 +469,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-runtime-view">6. Runtime View</a>
 <ul class="sectlevel2">
-<li><a href="#_runtime_scenario_1_login">6.1. &lt;Runtime Scenario 1 : Login&gt;</a></li>
-<li><a href="#_runtime_scenario_2_singup">6.2. &lt;Runtime Scenario 2 SingUp&gt;</a></li>
-<li><a href="#_runtime_scenario_3_game_cycle">6.3. &lt;Runtime Scenario 3 Game cycle&gt;</a></li>
+<li><a href="#_runtime_scenario_1_login">6.1. Runtime Scenario 1 : Login</a></li>
+<li><a href="#_runtime_scenario_2_singup">6.2. Runtime Scenario 2 SingUp</a></li>
+<li><a href="#_runtime_scenario_3_game_cycle">6.3. Runtime Scenario 3 Game cycle</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a>
@@ -487,22 +482,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
 <li><a href="#_application_architecture">8.1. Application Architecture</a></li>
-<li><a href="#_integration_with_microservices">8.2. Integration with Microservices</a></li>
-<li><a href="#_data_persistence_and_management">8.3. Data Persistence and Management</a></li>
-<li><a href="#_llm_service">8.4. LLM Service</a></li>
-<li><a href="#_testeability">8.5. Testeability</a></li>
-<li><a href="#_usability">8.6. Usability</a></li>
-<li><a href="#_maintainability_scalability">8.7. Maintainability &amp; Scalability</a></li>
+<li><a href="#_data_persistence_and_management">8.2. Data Persistence and Management</a></li>
+<li><a href="#_testeability">8.3. Testeability</a></li>
+<li><a href="#_usability">8.4. Usability</a></li>
+<li><a href="#_maintainability_scalability">8.5. Maintainability &amp; Scalability</a></li>
 </ul>
 </li>
-<li><a href="#section-design-decisions">9. Architecture Decisions</a>
-<ul class="sectlevel2">
-<li><a href="#_main_ide">9.1. Main IDE</a></li>
-<li><a href="#_front_end">9.2. Front-End</a></li>
-<li><a href="#_back_end">9.3. Back-End</a></li>
-<li><a href="#_llm">9.4. LLM</a></li>
-</ul>
-</li>
+<li><a href="#section-design-decisions">9. Architecture Decisions</a></li>
 <li><a href="#section-quality-scenarios">10. Quality Requirements</a>
 <ul class="sectlevel2">
 <li><a href="#_quality_tree">10.1. Quality Tree</a></li>
@@ -510,7 +496,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#section-technical-risks">11. Risks and Technical Debts</a></li>
-<li><a href="#section-glossary">12. Glossary</a></li>
+<li><a href="#section-testing">12. Testing</a>
+<ul class="sectlevel2">
+<li><a href="#_unit_tests_code_coverage_security_hotspots">12.1. Unit Tests, Code Coverage &amp; Security Hotspots</a></li>
+<li><a href="#_e2e_tests">12.2. E2E Tests</a></li>
+<li><a href="#_stability_testing">12.3. Stability Testing</a></li>
+</ul>
+</li>
+<li><a href="#section-glossary">13. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -533,7 +526,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>arc42, the template for documentation of software and system architecture.</p>
 </div>
 <div class="paragraph">
-<p>Template Version 8.2 EN. (based upon AsciiDoc version), January 2023</p>
+<p>Template Version {revnumber}. {revremark}, {revdate}</p>
 </div>
 <div class="paragraph">
 <p>Created, maintained and &#169; by Dr. Peter Hruschka, Dr. Gernot Starke and contributors.
@@ -885,7 +878,7 @@ These stakeholders determine the extent and the level of detail of your work and
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The use of Issues and Pull Requests for the proyects organization is highly sought to the point of necesity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The use of Issues and Pull Requests for the proyects organization is highly sought to the point of necessity</p></td>
 </tr>
 </tbody>
 </table>
@@ -1076,85 +1069,46 @@ together with a mapping table showing the relationships between channels and inp
 <img src="./images/3.2_Technical_Context.png" alt="3.2 Technical Context">
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Agent User (External User)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interacts with the Web App, serving as the system’s end user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Web App (View Layer - Frontend)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sends requests to and receives responses from the Backend. Acts as a bridge between the external user and backend services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Backend (Controller Layer - Node.js API)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Serves as the central hub that manages communication between components. Handles authentication, user management, and external interactions. Routes requests to the appropriate services in the Service Layer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Service Layer (Business Logic)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains core business logic. Processes requests from the Controller Layer and interfaces with the Model Layer to access data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Model Layer (Database &amp; Data Access Layer)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uses Mongoose ORM to interact with MongoDB. Defines schemas and performs all database operations.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect3">
-<h4 id="_explanation_of_technical_interfaces">3.2.1. <strong>Explanation of technical interfaces</strong></h4>
-<div class="paragraph">
-<p>The application follows a <strong>microservices architecture pattern</strong> using <strong>Node.js</strong> and <strong>MongoDB</strong>, with the following components:</p>
-</div>
-<div class="sect4">
-<h5 id="_agent_user_external_user"><strong>Agent User (External User)</strong></h5>
+<h4 id="_technical_interfaces">3.2.1. Technical Interfaces</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>The user interacts with the <strong>Web App</strong>, which serves as the frontend interface.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_web_app_view_layer_frontend"><strong>Web App (View Layer - Frontend)</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Sends <strong>requests</strong> to and receives <strong>responses</strong> from the <strong>Backend (Controller Layer)</strong>.</p>
-</li>
-<li>
-<p>Acts as a bridge between the external user and the backend services.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_backend_controller_layer_node_js_api"><strong>Backend (Controller Layer - Node.js API)</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Central hub that manages communication between different components.</p>
-</li>
-<li>
-<p>Handles authentication, user management, and interaction with external components.</p>
-</li>
-<li>
-<p>Routes requests and calls appropriate services in the <strong>Service Layer</strong>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_service_layer_business_logic"><strong>Service Layer (Business Logic)</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Contains core business logic.</p>
-</li>
-<li>
-<p>Processes requests received from the <strong>Controller Layer</strong>.</p>
-</li>
-<li>
-<p>Interfaces with the <strong>Model Layer</strong> to retrieve or store data.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_model_layer_database_data_access_layer"><strong>Model Layer (Database &amp; Data Access Layer)</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Uses <strong>Mongoose ORM</strong> to interact with the <strong>MongoDB database</strong>.</p>
-</li>
-<li>
-<p>Defines schemas and handles database operations.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_technical_interfaces"><strong>Technical Interfaces</strong></h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Web App &amp; Backend</strong>: HTTP Requests/Responses (REST API).</p>
+<p><strong>Web App &amp; Backend</strong>: HTTP Requests/Responses.</p>
 </li>
 <li>
 <p><strong>Backend &amp; Service Layer</strong>: Internal function calls.</p>
@@ -1167,9 +1121,8 @@ together with a mapping table showing the relationships between channels and inp
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>&lt;Mapping Input/Output to Channels&gt;</strong></p>
-</div>
+<div class="sect4">
+<h5 id="_mapping_inputoutput_to_channels">Mapping Input/Output to Channels</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1249,41 +1202,37 @@ together with a mapping table showing the relationships between channels and inp
 <h3 id="_high_level_decomposition">4.2. High-level decomposition</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quality goal</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Scenario</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Solution approach</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Link to Details</strong></p></td>
+<th class="tableblock halign-left valign-top"><strong>Quality goal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Scenario</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Solution approach</strong></th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A new user quickly understands how to play and how to ask for basic hints.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Intuitive interface, clear design of the interface for interacting with the predefined hint system.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to UI/UX Documentation]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The game loads images and predefined hints in 1-3 seconds.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Image optimization, predefined hint caching.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Performance Optimization Documentation]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Hint Accuracy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Predefined hints are relevant and help players progress.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Creation of a set of well-designed and reviewed hints for each image, validation with user testing.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Hint Design Documentation]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hints provided by the LLM are coherent with user questions and relevant to players progress.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creation of well-designed <strong>System Instructions</strong> for the LLM, paired with user testing to ensure the overall validity of the results.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Developers can run automated tests to verify game functionality.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Modular code design, implementation of unit and integration tests, use of testing frameworks.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Testability Documentation]</p></td>
 </tr>
 </tbody>
 </table>
@@ -1292,41 +1241,37 @@ together with a mapping table showing the relationships between channels and inp
 <h3 id="_approaches_to_achieve_quality_objectives">4.3. Approaches to achieve quality objectives</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Quality goal</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Scenario</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Solution approach</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Link to Details</strong></p></td>
+<th class="tableblock halign-left valign-top"><strong>Quality goal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Scenario</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Solution approach</strong></th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Players on different devices enjoy a consistent experience.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Responsive CSS design, cross-browser and device testing, use of responsive UI frameworks.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Responsive Design Documentation]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The game maintains a smooth experience with multiple concurrent players.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Scalable backend with Docker, load balancing, database query optimization.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Scalability Documentation]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Hint Accuracy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Predefined hints are clear and do not generate confusion.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Careful wording of hints, usability testing with real players, feedback system to improve hints.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Hint Design Documentation]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hints provided for the LLM are clear, don&#8217;t confuse the user or give them the straight answer.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Careful wording of instructions, testing to ensure this scenarios are minimal and fallback mechanisms to stop malfunctions interferencing with the game.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Code changes do not introduce regressions.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Continuous integration with automated testing, adequate code coverage, test documentation.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[Link to Automated Testing Documentation]</p></td>
 </tr>
 </tbody>
 </table>
@@ -1334,7 +1279,7 @@ together with a mapping table showing the relationships between channels and inp
 <div class="sect2">
 <h3 id="_relevant_organizational_decisions">4.4. Relevant organizational decisions</h3>
 <div class="paragraph">
-<p>Currently, we have been meeting once a week, although this may change in the future depending on the team&#8217;s needs to address different topics during development.</p>
+<p>We have been meeting once a week, although this may change in the future depending on the team&#8217;s needs to address different topics during development.</p>
 </div>
 <div class="paragraph">
 <p>In most meetings, if not all, all group members participate, and we discuss opinions on different designs and implementations of the application.</p>
@@ -1443,39 +1388,78 @@ In the best case you will get away with examples or simple signatures.</p>
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p>This sketch represents the interactions within the Wichat application. It outlines the components of the system and how they communicate, focusing on the user&#8217;s experience with the application and its core logic powered by an LLM (Large Language Model).</p>
+<p>This sketch represents the interactions within the Wichat application. It outlines the main components of the system, focusing on the user&#8217;s experience with the application and its bound technologies like the LLM (Large Language Model).</p>
 </dd>
 <dt class="hdlist1">Contained Building Blocks</dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>User</strong>: The authenticated individual interacting with the application. They play the game through the system, and their data is stored in the database.</p>
-</li>
-<li>
-<p><strong>Wichat Application</strong>: The main system that drives the game logic. It handles the flow of the game, including interactions between the user and the system, and manages the rules and responses generated by the LLM.</p>
-</li>
-<li>
-<p><strong>LLM (Large Language Model)</strong>: This external component generates hints based on the user&#8217;s requests through a hint chat.</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">Important Interfaces</dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>User Interaction Interface</strong>: The web client through which the user plays the game, allowing them to send requests for new rounds.</p>
-</li>
-<li>
-<p><strong>LLM Communication Interface</strong>: This interface handles requests from the Wichat application to the LLM, sending prompts and receiving generated content like answers in return.</p>
-</li>
-</ul>
-</div>
-</dd>
 </dl>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Name</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Responsibilities</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>User</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authenticated individual interacting with the application. They play the game through the system, and their data is stored in the database.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user interacts with the Wichat application, playing the game and requesting hints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Wichat Application</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The main system that drives the game logic. It handles the flow of the game, including interactions between the user and the system, and manages the rules and responses generated by the LLM.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Wichat application manages user interactions, game logic, and communication with the LLM.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LLM (Large Language Model)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This external component generates hints based on the user&#8217;s requests through a hint chat.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The LLM processes user requests and generates hints, enhancing the gaming experience.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Wikidata API</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The external API that provides valid questions and answers for the game.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Wikidata API supplies the Wichat application with valid questions and answers, ensuring the game&#8217;s content is accurate and relevant.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Important Interfaces</dt>
+</dl>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Name</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>User Interface</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The web client through which the user plays the game, allowing them to send requests for new rounds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LLM Communication Interface</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This interface handles requests from the Wichat application to the LLM, sending prompts and receiving generated content like answers in return.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Wikidata API Interface</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This interface allows the Wichat application to communicate with the Wikidata API, fetching valid questions and answers for the game.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1546,30 +1530,27 @@ You will mainly capture scenarios in your documentation to communicate your arch
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_1_login">6.1. &lt;Runtime Scenario 1 : Login&gt;</h3>
-<div class="imageblock">
+<h3 id="_runtime_scenario_1_login">6.1. Runtime Scenario 1 : Login</h3>
+<div class="imageblock text-center">
 <div class="content">
 <img src="./images/LoginDiagram.png" alt="LoginDiagram">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_2_singup">6.2. &lt;Runtime Scenario 2 SingUp&gt;</h3>
-<div class="imageblock">
+<h3 id="_runtime_scenario_2_singup">6.2. Runtime Scenario 2 SingUp</h3>
+<div class="imageblock text-center">
 <div class="content">
 <img src="./images/SignInDiagram.png" alt="SignInDiagram">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_3_game_cycle">6.3. &lt;Runtime Scenario 3 Game cycle&gt;</h3>
-<div class="imageblock">
+<h3 id="_runtime_scenario_3_game_cycle">6.3. Runtime Scenario 3 Game cycle</h3>
+<div class="imageblock text-center">
 <div class="content">
 <img src="./images/GameCycleDiagram.png" alt="GameCycleDiagram">
 </div>
-</div>
-<div class="paragraph">
-<p>.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1672,7 +1653,7 @@ when your infrastructure is more complex.</p>
 </table>
 <div class="imageblock">
 <div class="content">
-<img src="./images/InfraestructuraASW.png" alt="InfraestructuraASW">
+<img src="./images/diag-plantuml-md5-9627f14fa271a1c97619cd8570ca4b33.svg" alt="Diagram" width="974" height="616">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1785,8 +1766,8 @@ on this list.</p>
 <h3 id="_application_architecture">8.1. Application Architecture</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <thead>
 <tr>
@@ -1796,26 +1777,26 @@ on this list.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.1. Hexagonal Architecture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application follows a hexagonal architecture pattern, separating the different layers: frontend, business logic, microservices, and persistent storage.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices Architecture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application follows a microservices architecture pattern, where the system is divided into independently deployable services that encapsulate specific business capabilities. This enables modular development, deployment, and scalability.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.2. Communication Between Components</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each component, such as the web app, Gateway Service, and microservices, communicates using technologies like HTTP and REST. This ensures smooth, scalable interaction.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Communication Between Components</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each component, such as the web app, Gateway Service, and backend microservices, communicates using technologies like HTTP. This ensures smooth, decoupled, and scalable interactions.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.1.3. Presentation Layer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">web app serves as the entry point for external users, allowing interaction with the application and routing requests through the Gateway Service.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Presentation Layer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The web app serves as the entry point for external users, providing the user interface and routing requests through the Gateway Service to appropriate backend microservices.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_integration_with_microservices">8.2. Integration with Microservices</h3>
+<h3 id="_data_persistence_and_management">8.2. Data Persistence and Management</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <thead>
 <tr>
@@ -1825,22 +1806,18 @@ on this list.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.2.1. Communication Between Microservices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices communicate via REST, enabling flexible integration and handling different functionalities.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.2.2. Scalability Through Microservices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices architecture allows independent scaling of services without affecting other parts of the app.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database Interaction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microservices interact with their respective data stores. The Gateway Service interact with a shared database for the WebApp ownned microservices using an internal MongoDB database.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_data_persistence_and_management">8.3. Data Persistence and Management</h3>
+<h3 id="_testeability">8.3. Testeability</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <thead>
 <tr>
@@ -1850,22 +1827,30 @@ on this list.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.3.1. Database Interaction</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Gateway Service uses JPA to interact with MySQL, ensuring efficient and secure data management.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure that each individual unit or component functions as expected in isolation.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.3.2. Data Backup</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The MySQL database should be configured for automatic backups, ensuring data integrity and recovery in case of failure.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validate the interaction and data flow between multiple services or components.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Functional Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Confirm that the application&#8217;s behavior aligns with specified functional requirements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security Tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect vulnerabilities and verify the protection of sensitive data and system integrity.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_llm_service">8.4. LLM Service</h3>
+<h3 id="_usability">8.4. Usability</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <thead>
 <tr>
@@ -1875,18 +1860,18 @@ on this list.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.4.1. LLM Service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The LLM Service is a microservice that interacts with a Large Language Model, generating text or performing language-related tasks based on user input.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability focuses on creating an intuitive and efficient user experience. We prioritize clear navigation, accessibility, and a minimal learning curve to maximize user satisfaction.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_testeability">8.5. Testeability</h3>
+<h3 id="_maintainability_scalability">8.5. Maintainability &amp; Scalability</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 60%;">
-<col style="width: 40%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <thead>
 <tr>
@@ -1896,66 +1881,12 @@ on this list.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.1. Unit Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verify that each individual unit or component of the application functions correctly.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emphasizes ease of modifying, extending, or fixing the system over time. Microservices improve maintainability by isolating changes to specific services.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.2. Integration Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check the interaction between different units or components of the application.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.3. Functional Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verify that the application meets the specified functional requirements.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.5.4. Security Tests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Identify vulnerabilities and ensure the protection of sensitive data.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_usability">8.6. Usability</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.6.1. Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability ensures products are easy and efficient to use, leading to user satisfaction.  We&#8217;ll prioritize an intuitive design, clear navigation, and accessibility, with a particular focus on making our app user-friendly and requiring a low learning curve.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_maintainability_scalability">8.7. Maintainability &amp; Scalability</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Concept</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.7.1. Maintainability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Focuses on how easily software can be modified, fixed, or improved over time. Good maintainability reduces costs and effort for future changes.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8.7.2. Scalability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Addresses the ability of a system to handle increased load or growth. A scalable system can adapt to more users, data, or transactions without significant performance degradation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture supports horizontal scalability, allowing each service to scale independently based on demand, ensuring robust performance under load.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1972,55 +1903,41 @@ on this list.</p>
 <div class="paragraph">
 <p>These decisions are discussed in personal meetings and recorded in the meeting minutes, with some of the most important decisions being the following:</p>
 </div>
-<div class="sect2">
-<h3 id="_main_ide">9.1. Main IDE</h3>
-<div class="paragraph">
-<p>7/02/2024</p>
-</div>
-<div class="paragraph">
-<p><strong>Description:</strong> The main programming language for the application&#8217;s development will be JavaScript, but we are unsure if we will need to develop certain modules in another programming language.</p>
-</div>
-<div class="paragraph">
-<p><strong>Decision taken:</strong> Due to the need for the IDE to be versatile in handling multiple possible programming languages, we have decided to use the Visual Studio Code IDE.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_front_end">9.2. Front-End</h3>
-<div class="paragraph">
-<p>7/02/2024</p>
-</div>
-<div class="paragraph">
-<p><strong>Description:</strong> The main way for users to interact with the system and the part which will be deployer</p>
-</div>
-<div class="paragraph">
-<p><strong>Decision taken:</strong> The most likely candidate for its implementation is react, yet it is still up for debate.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_back_end">9.3. Back-End</h3>
-<div class="paragraph">
-<p>7/02/2024</p>
-</div>
-<div class="paragraph">
-<p><strong>Description:</strong> The inner workings of the application which will not be for the clients to use and see.</p>
-</div>
-<div class="paragraph">
-<p><strong>Decision taken:</strong> The most likely candidate for its implementation is a relational database and a Javascript framework, yet it is still up for debate.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_llm">9.4. LLM</h3>
-<div class="paragraph">
-<p>7/02/2024</p>
-</div>
-<div class="paragraph">
-<p><strong>Description:</strong> The Language modules will be used for the hint generation in the application thus will be one we&#8217;ll need to choose</p>
-</div>
-<div class="paragraph">
-<p><strong>Decision taken:</strong> There had been no advancement in this decision.</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Decision</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The group decided for the main programming language for the application&#8217;s development to be JavaScript.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Front-End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The main way for users to interact with the system is the front-end, which will be developed in React.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Back-End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The inner workings of the application which will not be for the clients to use and see developed in Node.js.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LLM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Language modules used for the hint generation in the application rely on google gemini as is the chosen LLM for the proyect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deployment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application will be deployed on Azure, as it is the platform that best suits the needs of the project and is of easier access for the group members.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -2110,12 +2027,6 @@ concrete and measurable.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The LLM responds fast enough so the user isn&#8217;t kept waiting for it.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A user attempts to access another user&#8217;s information without authorization.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Protect users' privacy and data confidentiality.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The system denies the request and logs the unauthorized access attempt.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A new user accesses the application and must start a game within reasonable time.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ensure a low learning curve and an intuitive experience.</p></td>
@@ -2125,7 +2036,7 @@ concrete and measurable.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Some collaborator is trying to edit, fix or add a new functionality to the app.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ensure the changes can be done seamlessly without having to refactor or edit other areas of the code.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application continues functioning correctly after the changes thanks t a division of the functionality in blocks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application continues functioning correctly after the changes thanks to the division of the functionality in different microservices.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Compatibility</p></td>
@@ -2138,7 +2049,7 @@ experience.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reliability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The app has been available for a long time.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ensure the app continues to work even after it&#8217;s dependencies have been updated allowing it to work correctly over time.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The app keeps working correctly without any apparent or changes to it.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The app keeps working correctly without any apparent changes to it.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2236,7 +2147,74 @@ Consult the code and documentation of last year&#8217;s projects to observe the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary">12. Glossary</h2>
+<h2 id="section-testing">12. Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Software quality is a critical aspect of the development lifecycle. To ensure this quality, a combination of automated testing strategies and static code analysis has been implemented. This section outlines the unit tests, code coverage, security hotspots, and provides an introduction to end-to-end (E2E) testing.</p>
+</div>
+<div class="sect2">
+<h3 id="_unit_tests_code_coverage_security_hotspots">12.1. Unit Tests, Code Coverage &amp; Security Hotspots</h3>
+<div class="paragraph">
+<p>To verify the correct behavior of individual modules, unit tests have been developed using tools appropriate for the project&#8217;s technology stack. These tests cover both business logic and key utility functions.</p>
+</div>
+<div class="paragraph">
+<p>Code coverage and static analysis were performed using SonarQube, with the following results:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Code coverage:</strong> 89.9% on 952 lines of code.</p>
+</li>
+<li>
+<p><strong>Security hotspots:</strong> 18 identified, pending review and classification.</p>
+</li>
+<li>
+<p><strong>Code duplication:</strong> 0.3%, indicating a very low level of redundancy.</p>
+</li>
+<li>
+<p><strong>Code quality:</strong> The project passed the <strong>Quality Gate</strong> with an "A" rating in security, reliability, and maintainability.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/12.Testing_SonarQube.png" alt="SonarQube Results">
+</div>
+</div>
+<div class="paragraph">
+<p>This level of coverage and quality provides high confidence in the stability of the system&#8217;s components.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_e2e_tests">12.2. E2E Tests</h3>
+<div class="paragraph">
+<p>In addition to unit testing, end-to-end (E2E) tests are being developed to validate complete user flows—from the user interface through to the backend. These tests aim to ensure that all components of the system integrate properly and behave as expected under various usage conditions.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/12.E2e_Tests.png" alt="Implemented e2e tests">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stability_testing">12.3. Stability Testing</h3>
+<div class="paragraph">
+<p>Stability is a critical aspect of the development process, ensuring that the system can handle expected loads and perform reliably over time. This includes testing for memory leaks, performance under stress, and overall system resilience.</p>
+</div>
+<div class="paragraph">
+<p>Here we can see the results of the stability tests performed on the system over time:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/12.Stability_Testing.jpg" alt="Results of testing for the app stablity">
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-glossary">13. Glossary</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2252,15 +2230,63 @@ Consult the code and documentation of last year&#8217;s projects to observe the 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>WiChat</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The name of our project</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The name of our project and application.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Question Generator (QG)</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A module of the application responsible for querying Wikidata, creating the questions and storing them</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A module of the application responsible for querying Wikidata, creating the questions and storing them.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Wikidata</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A free knowledge base that can be read and edited by both humans and machines. It is used to obtain the questions and their validity.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Microservice</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A software development technique that structures an application as a collection of small autonomous services, modeled around a business domain.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Grafana</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>An open-source platform for monitoring and observability, used to visualize and analyze data from various sources.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Prometheus</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>An open-source systems monitoring and alerting toolkit, used to collect and store metrics data.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MongoDB</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A NoSQL database that uses a document-oriented data model, used to store user profiles and game-related data.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Azure</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A cloud computing service created by Microsoft for building, testing, deploying, and managing applications and services through Microsoft-managed data centers.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Docker</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A platform that enables developers to automate the deployment of applications inside lightweight, portable containers.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>React</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A JavaScript library for building user interfaces, used to develop the front-end of the application.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Node.js</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A JavaScript runtime built on Chrome&#8217;s V8 JavaScript engine, used to develop the back-end of the application.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Large Language Models (LLM)</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>very large deep learning models that are pre-trained on vast amounts of data</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The name via which we refer to the AI models that are trained on large pools of data for text generation and we  useto generate hints for the game.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>E2E Tests</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>End-to-end tests that validate complete user flows, ensuring that all components of the system integrate properly and behave as expected.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>SonarQube</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>An open-source platform for continuous inspection of code quality, used to perform static analysis and code coverage.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Quality Gate</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A set of conditions that a project must meet to be considered of acceptable quality, as defined by SonarQube.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -2269,8 +2295,7 @@ Consult the code and documentation of last year&#8217;s projects to observe the 
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 8.2 EN<br>
-Last updated 2025-02-28 14:03:09 +0100
+Last updated 2025-05-04 23:49:52 +0200
 </div>
 </div>
 </body>
